@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/stcommon" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stmanager" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stmanagermapper" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stmanagerpojo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stmanagerservice" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stmanagerweb" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/stparent" charset="UTF-8" />
+  </component>
+</project>

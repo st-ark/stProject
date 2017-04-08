@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/st.iml" filepath="$PROJECT_DIR$/st.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stcommon/stcommon.iml" filepath="$PROJECT_DIR$/stcommon/stcommon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stmanager/stmanager.iml" filepath="$PROJECT_DIR$/stmanager/stmanager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stmanagermapper/stmanagermapper.iml" filepath="$PROJECT_DIR$/stmanagermapper/stmanagermapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stmanagerpojo/stmanagerpojo.iml" filepath="$PROJECT_DIR$/stmanagerpojo/stmanagerpojo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stmanagerservice/stmanagerservice.iml" filepath="$PROJECT_DIR$/stmanagerservice/stmanagerservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stmanagerweb/stmanagerweb.iml" filepath="$PROJECT_DIR$/stmanagerweb/stmanagerweb.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stparent/stparent.iml" filepath="$PROJECT_DIR$/stparent/stparent.iml" />
+    </modules>
+  </component>
+</project>
