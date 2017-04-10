@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.st.mapper.TestInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.st.pojo.TestInfo" >
+    <id column="test_id" property="testId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="up_id" property="upId" jdbcType="VARCHAR" />
+    <result column="difficulty" property="difficulty" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="edit_date" property="editDate" jdbcType="TIMESTAMP" />
+    <result column="thumb_up" property="thumbUp" jdbcType="INTEGER" />
+    <result column="thum_down" property="thumDown" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    test_id, name, up_id, difficulty, count, edit_date, thumb_up, thum_down, state, type
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.st.pojo.TestInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from test_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_info
+    where test_id = #{testId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from test_info
+    where test_id = #{testId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.st.pojo.TestInfoExample" >
+    delete from test_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.st.pojo.TestInfo" >
+    insert into test_info (test_id, name, up_id, 
+      difficulty, count, edit_date, 
+      thumb_up, thum_down, state, 
+      type)
+    values (#{testId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{upId,jdbcType=VARCHAR}, 
+      #{difficulty,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{editDate,jdbcType=TIMESTAMP}, 
+      #{thumbUp,jdbcType=INTEGER}, #{thumDown,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.st.pojo.TestInfo" >
+    insert into test_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="testId != null" >
+        test_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="upId != null" >
+        up_id,
+      </if>
+      <if test="difficulty != null" >
+        difficulty,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="editDate != null" >
+        edit_date,
+      </if>
+      <if test="thumbUp != null" >
+        thumb_up,
+      </if>
+      <if test="thumDown != null" >
+        thum_down,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="testId != null" >
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="upId != null" >
+        #{upId,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null" >
+        #{difficulty,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="editDate != null" >
+        #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thumbUp != null" >
+        #{thumbUp,jdbcType=INTEGER},
+      </if>
+      <if test="thumDown != null" >
+        #{thumDown,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.st.pojo.TestInfoExample" resultType="java.lang.Integer" >
+    select count(*) from test_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update test_info
+    <set >
+      <if test="record.testId != null" >
+        test_id = #{record.testId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upId != null" >
+        up_id = #{record.upId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.difficulty != null" >
+        difficulty = #{record.difficulty,jdbcType=INTEGER},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.editDate != null" >
+        edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.thumbUp != null" >
+        thumb_up = #{record.thumbUp,jdbcType=INTEGER},
+      </if>
+      <if test="record.thumDown != null" >
+        thum_down = #{record.thumDown,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update test_info
+    set test_id = #{record.testId,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      up_id = #{record.upId,jdbcType=VARCHAR},
+      difficulty = #{record.difficulty,jdbcType=INTEGER},
+      count = #{record.count,jdbcType=INTEGER},
+      edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      thumb_up = #{record.thumbUp,jdbcType=INTEGER},
+      thum_down = #{record.thumDown,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.st.pojo.TestInfo" >
+    update test_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="upId != null" >
+        up_id = #{upId,jdbcType=VARCHAR},
+      </if>
+      <if test="difficulty != null" >
+        difficulty = #{difficulty,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="editDate != null" >
+        edit_date = #{editDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thumbUp != null" >
+        thumb_up = #{thumbUp,jdbcType=INTEGER},
+      </if>
+      <if test="thumDown != null" >
+        thum_down = #{thumDown,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+    </set>
+    where test_id = #{testId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.st.pojo.TestInfo" >
+    update test_info
+    set name = #{name,jdbcType=VARCHAR},
+      up_id = #{upId,jdbcType=VARCHAR},
+      difficulty = #{difficulty,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER},
+      edit_date = #{editDate,jdbcType=TIMESTAMP},
+      thumb_up = #{thumbUp,jdbcType=INTEGER},
+      thum_down = #{thumDown,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER}
+    where test_id = #{testId,jdbcType=VARCHAR}
+  </update>
+</mapper>
