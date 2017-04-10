@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/stcommon" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/stmanager" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/stmanagermapper" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/stmanagerpojo" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/stmanagerservice" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/stmanagerweb" vcs="svn" />
+    <mapping directory="$PROJECT_DIR$/stparent" vcs="svn" />
+  </component>
+</project>
