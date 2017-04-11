@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.st.mapper.ResCommonMapper" >
+    <select id="selectResInfo" resultType="Map" parameterType="String">
+       select res_id,title,type,thumb_up,thumb_down from res_info where res_id = #{resId};
+    </select>
+    <select id="selectResInfoAll" resultType="com.st.pojo.ResInfo" parameterType="String">
+        select res_id resId,user_id userId, title,type, knowledge_id knowledgeId,
+          thumb_up thumbUp,thumb_down thumbDown,state from res_info where res_id = #{resId};
+    </select>
+    <select id="selectResState" resultType="int" parameterType="String">
+        select state from res_info where res_id = #{redId};
+    </select>
+    <select id="selectResUp" resultType="Map" parameterType="String">
+       select ri.user_id, ui.nick_name, si.name
+from res_info ri
+left join user_info ui on ri.user_id = ui.user_id
+left join school_info si on si.school_id = ui.school_id
+where ri.res_id = #{resId}
+    </select>
+    <select id="selectResData" resultType="Map" parameterType="String">
+        select rd.content, rd.type
+from res_info ri
+left join res_data rd on rd.data_id in (select rdcon.data_id from res_data_con rdcon where rdcon.res_id = ri.res_id)
+where ri.res_id = #{resId}
+    </select>
+
+</mapper>

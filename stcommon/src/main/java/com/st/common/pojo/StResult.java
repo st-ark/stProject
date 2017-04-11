@@ -29,6 +29,9 @@ public class StResult {
     public static StResult ok(Object data) {
         return new StResult(data);
     }
+    public static StResult ok(Throwable e) {
+        return new StResult(e);
+    }
 
     public static StResult ok() {
         return new StResult(null);
@@ -52,6 +55,12 @@ public class StResult {
         this.status = 200;
         this.msg = "OK";
         this.data = data;
+    }
+
+    public StResult(Throwable e) {
+        this.status = 200;
+        this.msg = "EROOR";
+        this.data = e.getMessage();
     }
 
 //    public Boolean isOK() {

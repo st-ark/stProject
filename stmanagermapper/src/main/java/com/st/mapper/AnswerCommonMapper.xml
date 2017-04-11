@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.st.mapper.AnswerCommonMapper" >
+    <select id="selectAnswerSkill" parameterType="String" resultType="Map">
+        SELECT
+	qscon.skill_id,
+  qsclass.name
+FROM
+	question_info qi
+LEFT JOIN question_skill_con qscon ON qscon.question_id = qi.question_id
+LEFT JOIN question_skill_class qsclass ON qsclass.class_id = (SELECT qs.class from question_skill qs WHERE qs.skill_id = qscon.skill_id)
+WHERE
+	qi.question_id = #{id}
+    </select>
+    <select id="selectAnswerInfo" parameterType="String" resultType="Map">
+        SELECT
+        qa.content,
+        qa.url,
+        qa.type
+        FROM
+        question_info qi
+        LEFT JOIN question_answer qa ON qa.answer_id = qi.answer_id
+        WHERE
+        qi.question_id = #{id}
+    </select>
+    <select id="selectAnswerRes" parameterType="String" resultType="Map">
+        SELECT
+ qrcon.res_id,
+ ri.title,
+ ri.type
+from question_info qi
+LEFT JOIN question_res_con qrcon on qrcon.question_id = qi.question_id
+LEFT JOIN res_info ri on ri.res_id = qrcon.res_id
+WHERE qi.question_id = #{id}
+    </select>
+    <select id="selectAnswerSolve" parameterType="String" resultType="Map">
+SELECT
+	qs.solve_id,
+	qs.thumb_up,
+	qs.thumb_down
+FROM
+	question_info qi
+LEFT JOIN question_solve qs ON qs.solve_id  in
+(select solve_id  from question_solve_con qscon where qscon.question_id  = qi.question_id)
+WHERE
+	qi.question_id = #{id}
+    </select>
+    <select id="selectQuestionState" parameterType="String" resultType="int">
+       select state from question_info where question_id = #{id}
+    </select>
+    <select id="selectAnswerState" parameterType="String" resultType="int">
+        SELECT
+	qs.state
+FROM
+	question_info qi
+LEFT JOIN question_solve qs ON qs.solve_id  in
+(select solve_id  from question_solve_con qscon where qscon.question_id  = qi.question_id)
+WHERE
+	qi.question_id = #{id}
+    </select>
+    <select id="selectQuestionInfoAll" parameterType="String" resultType="com.st.pojo.QuestionInfo">
+        select  question_id  questionId, content, url, up_id upId,
+         from_id fromId, difficulty, type, count, solve_id solveId,
+         answer_id answerId, edit_date editDate, state
+         from question_info
+        where question_id = #{questionId}
+    </select>
+    <insert id="addAnswer" parameterType="com.st.pojo.QuestionAnswer" >
+        insert into question_answer
+         (answer_id, content, url, type, up_id, edit_date)
+        values(#{answerId},#{content},#{url},#{type},#{upId},#{editDate})
+    </insert>
+    <insert id="updateAnswer" parameterType="com.st.pojo.QuestionAnswer" >
+        update question_answer set content = #{content},url=#{url},type=#{type} where answer_id = #{answerId}
+    </insert>
+    <insert id="deleteAnswer" parameterType="String">
+        delete from  question_answer where answer_id = #{answerId}
+    </insert>
+
+</mapper>

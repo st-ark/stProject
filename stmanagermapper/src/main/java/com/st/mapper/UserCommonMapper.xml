@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.st.mapper.UserCommonMapper" >
+    <select id="selectUserInfoAll" parameterType="String" resultType="com.st.pojo.UserInfo">
+        select user_id userId, open_id openId, nick_name nickName, avatar,
+        state, school_id schoolId, phone, group_id groupId, group_ranking groupRanking,
+        type, edit_date editDate, knowledge_count knowledgeCount,wallet,
+        login_date loginDate, score
+        from user_info WHERE user_id = #{userId}
+    </select>
+</mapper>
