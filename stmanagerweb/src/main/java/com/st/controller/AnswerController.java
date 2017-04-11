@@ -55,10 +55,12 @@ public class AnswerController {
     /**
      * 修改答案
      */
-    @RequestMapping("/update/{answerId}&{url}&{type}&{content}")
+    @RequestMapping("/update/{userId}&{questionId}&{answerId}&{url}&{type}&{content}")
     @ResponseBody
-    public StResult addAnswer(@PathVariable String answerId, @PathVariable String url, @PathVariable Integer type, @PathVariable String content) {
+    public StResult addAnswer(@PathVariable String userId, @PathVariable String questionId,@PathVariable String answerId, @PathVariable String url, @PathVariable Integer type, @PathVariable String content) {
         AnswerParams params = new AnswerParams();
+        params.setQuestionId(questionId);
+        params.setUserId(userId);
         params.setAnswerId(answerId);
         params.setUrl(url);
         params.setType(type);
@@ -78,6 +80,7 @@ public class AnswerController {
         AnswerParams params = new AnswerParams();
         params.setUserId(userId);
         params.setQuestionId(questionId);
+        params.setAnswerId(answerId);
         try {
             return StResult.ok(answerService.deleteAnswer(params,answerId));
         } catch (Exception e) {
