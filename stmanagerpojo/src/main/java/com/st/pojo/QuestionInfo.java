@@ -1,6 +1,8 @@
 package com.st.pojo;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class QuestionInfo {
     private String questionId;
@@ -26,6 +28,10 @@ public class QuestionInfo {
     private Date editDate;
 
     private Integer state;
+
+    public UserInfo userInfo;
+    public TestInfo testInfo;
+    public Set QuestionChoiceCon =new HashSet();
 
     public String getQuestionId() {
         return questionId;
@@ -122,4 +128,38 @@ public class QuestionInfo {
     public void setState(Integer state) {
         this.state = state;
     }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setTestInfo(TestInfo testInfo) {
+        this.testInfo = testInfo;
+    }
+
+    public TestInfo getTestInfo() {
+        return testInfo;
+    }
+
+    public void setQuestionChoiceCon(Set questionChoiceCon) {
+        QuestionChoiceCon = questionChoiceCon;
+    }
+
+    public Set getQuestionChoiceCon() {
+        return QuestionChoiceCon;
+    }
+
+
+    @Override
+    public String toString() {
+        return "QuestionInfo [question_id=" + questionId + ", content=" + content
+                + ", url=" + url + ", up_id=" + upId
+                + ", from_id=" + fromId + ", difficulty="+difficulty+", type="+ type+",count="+count
+                +",solve_id=" +solveId+",answer_id="+answerId+" , edit_date="+editDate+",state="+state
+                +",UserInfo="+userInfo+",TestInfo="+testInfo+" ,QuestionChoiceCon=" +QuestionChoiceCon+" ]";
+    }
+
 }

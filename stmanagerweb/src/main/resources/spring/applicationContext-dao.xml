@@ -19,6 +19,8 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"></property>
         <property name="dataSource" ref="dataSource"></property>
+        <!--为实体取别名-->
+        <property name="typeAliasesPackage" value="com.st.pojo"/>
     </bean>
     <!-- 配置扫描包，加载mapper代理对象 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

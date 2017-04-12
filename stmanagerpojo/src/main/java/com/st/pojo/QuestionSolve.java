@@ -19,6 +19,26 @@ public class QuestionSolve {
 
     private Integer state;
 
+    private QuestionSolveCon qsc;
+
+    private UserInfo userInfo;
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setQsc(QuestionSolveCon qsc) {
+        this.qsc = qsc;
+    }
+
+    public QuestionSolveCon getQsc() {
+        return qsc;
+    }
+
     public String getSolveId() {
         return solveId;
     }

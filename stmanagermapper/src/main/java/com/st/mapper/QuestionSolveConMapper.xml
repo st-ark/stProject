@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.st.mapper.QuestionSolveConMapper" >
+  <resultMap id="BaseResultMap" type="com.st.pojo.QuestionSolveCon" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="solve_id" property="solveId" jdbcType="VARCHAR" />
+    <result column="question_id" property="questionId" jdbcType="VARCHAR" />
+    <result column="eye_id" property="eyeId" jdbcType="VARCHAR" />
+    <result column="knowledge_id" property="knowledgeId" jdbcType="INTEGER" />
+    <result column="formula_id" property="formulaId" jdbcType="VARCHAR" />
+    <result column="trap_id" property="trapId" jdbcType="VARCHAR" />
+    <result column="eye_check" property="eyeCheck" jdbcType="INTEGER" />
+    <result column="knowledge_check" property="knowledgeCheck" jdbcType="INTEGER" />
+    <result column="formula_check" property="formulaCheck" jdbcType="INTEGER" />
+    <result column="trap_check" property="trapCheck" jdbcType="INTEGER" />
+    <!--配置knowledge_info-->
+    <association property="ki" resultMap="kiMap" javaType="KnowledgeInfo" column="knowledge_id" />
+    <!--配置QuestionEye-->
+    <association property="qe" resultMap="qeMap" javaType="QuestionEye" column="eye_id" />
+    <!--配置QuestionTrap-->
+    <association property="qt" resultMap="qtMap" javaType="QuestionTrap" column="trap_id" />
+    <!--配置FormulInfo-->
+    <association property="fi" resultMap="fiMap" javaType="FormulaInfo" column="formula_id" />
+    <!-- 配置QuestionSolve-->
+    <collection property="QuestionSolve" resultMap="qsMap"/>
+  </resultMap>
+    <!-- 配置QuestionSolve-->
+  <resultMap id="qsMap" type="QuestionSolve">
+    <id column="solve_id" property="solveId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="up_id" property="upId" jdbcType="VARCHAR" />
+    <result column="thumb_down" property="thumbDown" jdbcType="INTEGER" />
+    <result column="thumb_up" property="thumbUp" jdbcType="INTEGER" />
+    <result column="question_id" property="questionId" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <!-- 配置UserInfo-->
+      <association property="userInfo" column="question_solve" resultMap="uiMap" javaType="UserInfo"/>
+  </resultMap>
+  <!--配置Userinfo-->
+  <resultMap id="uiMap" type="UserInfo">
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <!-- 配置school-->
+    <association property="schoolInfo" resultMap="siMap" javaType="SchoolInfo" column="school_id"/>
+  </resultMap>
+  <!-- 配置school-->
+  <resultMap id="siMap" type="SchoolInfo">
+    <id column="school_id" property="schoolId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--配置knowledge_info-->
+  <resultMap id="kiMap" type="KnowledgeInfo">
+    <id column="knowledge_id" property="knowledgeId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--配置knowledge_info-->
+  <resultMap id="qeMap" type="QuestionEye">
+    <id column="eye_id" property="eyeId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <!--配置QuestionTrap-->
+  <resultMap id="qtMap" type="QuestionTrap">
+    <id column="trap_id" property="trapId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+  <!--配置FormulaInfo-->
+  <resultMap id="fiMap" type="FormulaInfo">
+    <id column="formula_id" property="formulaId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="up" property="up" jdbcType="VARCHAR" />
+    <result column="down" property="down" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+
+  <select id="getSolveByid" resultMap="BaseResultMap">
+
+      select qs.solve_id,qs.content,qs.thumb_up,qs.thumb_down,qs.state,qs.up_id,
+		    ui.nick_name,si.name,ki.knowledge_id,ki.name,qe.eye_id,qe.content,qe.`type`,
+		    qt.trap_id,qt.content,qt.`type`
+		    from
+		          question_solve qs,question_solve_con qsc,knowledge_info ki,
+				  question_eye qe,question_trap qt,formula_info fi,school_info si,user_info ui
+		    where
+				  qs.solve_id=qsc.solve_id and qs.up_id=ui.user_id and ui.school_id=si.school_id and
+				  qsc.knowledge_id=ki.knowledge_id and qsc.eye_id=qe.eye_id and qsc.trap_id=qt.trap_id and
+				  qsc.formula_id=fi.formula_id and qs.solve_id=#{id}
+  </select>
+</mapper>

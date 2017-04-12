@@ -1,6 +1,8 @@
 package com.st.pojo;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TestInfo {
     private String testId;
@@ -22,6 +24,8 @@ public class TestInfo {
     private Integer state;
 
     private Integer type;
+
+    private Set QuestionInfo=new HashSet();//题目
 
     public String getTestId() {
         return testId;

@@ -1,6 +1,8 @@
 package com.st.pojo;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class UserInfo {
     private String userId;
@@ -32,6 +34,20 @@ public class UserInfo {
     private Date loginDate;
 
     private Long score;
+
+    private SchoolInfo schoolInfo;
+
+    private Set QuestionInfo =new HashSet();//题目
+
+    private Set QuestionSolve=new HashSet();
+
+    public void setQuestionSolve(Set questionSolve) {
+        QuestionSolve = questionSolve;
+    }
+
+    public Set getQuestionSolve() {
+        return QuestionSolve;
+    }
 
     public String getUserId() {
         return userId;
@@ -151,5 +167,21 @@ public class UserInfo {
 
     public void setScore(Long score) {
         this.score = score;
+    }
+
+    public void setQuestionInfo(Set questionInfo) {
+        QuestionInfo = questionInfo;
+    }
+
+    public void setSchoolInfo(SchoolInfo schoolInfo) {
+        this.schoolInfo = schoolInfo;
+    }
+
+    public SchoolInfo getSchoolInfo() {
+        return schoolInfo;
+    }
+
+    public Set getQuestionInfo() {
+        return QuestionInfo;
     }
 }

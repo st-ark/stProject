@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.st.mapper.KnowledgeInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.st.pojo.KnowledgeInfo" >
+    <id column="knowledge_id" property="knowledgeId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="unit_id" property="unitId" jdbcType="INTEGER" />
+    <result column="formula_id" property="formulaId" jdbcType="VARCHAR" />
+    <result column="edit_date" property="editDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    knowledge_id, name, unit_id, formula_id, edit_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.st.pojo.KnowledgeInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from knowledge_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from knowledge_info
+    where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from knowledge_info
+    where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.st.pojo.KnowledgeInfoExample" >
+    delete from knowledge_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.st.pojo.KnowledgeInfo" >
+    insert into knowledge_info (knowledge_id, name, unit_id, 
+      formula_id, edit_date)
+    values (#{knowledgeId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}, 
+      #{formulaId,jdbcType=VARCHAR}, #{editDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.st.pojo.KnowledgeInfo" >
+    insert into knowledge_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="knowledgeId != null" >
+        knowledge_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="unitId != null" >
+        unit_id,
+      </if>
+      <if test="formulaId != null" >
+        formula_id,
+      </if>
+      <if test="editDate != null" >
+        edit_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="knowledgeId != null" >
+        #{knowledgeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="formulaId != null" >
+        #{formulaId,jdbcType=VARCHAR},
+      </if>
+      <if test="editDate != null" >
+        #{editDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.st.pojo.KnowledgeInfoExample" resultType="java.lang.Integer" >
+    select count(*) from knowledge_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update knowledge_info
+    <set >
+      <if test="record.knowledgeId != null" >
+        knowledge_id = #{record.knowledgeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitId != null" >
+        unit_id = #{record.unitId,jdbcType=INTEGER},
+      </if>
+      <if test="record.formulaId != null" >
+        formula_id = #{record.formulaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.editDate != null" >
+        edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update knowledge_info
+    set knowledge_id = #{record.knowledgeId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      unit_id = #{record.unitId,jdbcType=INTEGER},
+      formula_id = #{record.formulaId,jdbcType=VARCHAR},
+      edit_date = #{record.editDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.st.pojo.KnowledgeInfo" >
+    update knowledge_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="unitId != null" >
+        unit_id = #{unitId,jdbcType=INTEGER},
+      </if>
+      <if test="formulaId != null" >
+        formula_id = #{formulaId,jdbcType=VARCHAR},
+      </if>
+      <if test="editDate != null" >
+        edit_date = #{editDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.st.pojo.KnowledgeInfo" >
+    update knowledge_info
+    set name = #{name,jdbcType=VARCHAR},
+      unit_id = #{unitId,jdbcType=INTEGER},
+      formula_id = #{formulaId,jdbcType=VARCHAR},
+      edit_date = #{editDate,jdbcType=TIMESTAMP}
+    where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+  </update>
+</mapper>

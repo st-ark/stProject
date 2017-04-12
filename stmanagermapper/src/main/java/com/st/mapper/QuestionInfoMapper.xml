@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.st.mapper.QuestionInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.st.pojo.QuestionInfo" >
+    <id column="question_id" property="questionId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="up_id" property="upId" jdbcType="VARCHAR" />
+    <result column="from_id" property="fromId" jdbcType="VARCHAR" />
+    <result column="difficulty" property="difficulty" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="solve_id" property="solveId" jdbcType="VARCHAR" />
+    <result column="answer_id" property="answerId" jdbcType="VARCHAR" />
+    <result column="edit_date" property="editDate" jdbcType="TIMESTAMP" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <!--配置UserInfo-->
+    <association property="userInfo" resultMap="userMap" javaType="UserInfo" column="up_id"/>
+    <!--testInfo-->
+    <association property="testInfo" resultMap="testMap" javaType="TestInfo" column="from_id"/>
+   <!-- QuestionChoiceCon-->
+    <collection property="QuestionChoiceCon" resultMap="qccMap"/>
+  </resultMap>
+
+  <!--配置UserInfo-->
+  <resultMap id="userMap" type="UserInfo">
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <!-- 配置school-->
+    <association property="schoolInfo" resultMap="siMap" javaType="SchoolInfo" column="school_id"/>
+  </resultMap>
+  <!--testInfo-->
+  <resultMap id="testMap" type="TestInfo">
+    <id column="test_id" property="testId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="difficulty" property="difficulty" jdbcType="INTEGER" />
+    <result column="thumb_up" property="thumbUp" jdbcType="INTEGER" />
+    <result column="thum_down" property="thumDown" jdbcType="INTEGER" />
+  </resultMap>
+  <!-- 配置school-->
+  <resultMap id="siMap" type="SchoolInfo">
+    <id column="school_id" property="schoolId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <!--配置QuestionChoiceCon-->
+  <resultMap id="qccMap" type="QuestionChoiceCon">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="question_id" property="questionId" jdbcType="VARCHAR" />
+    <result column="choice_id" property="choiceId" jdbcType="VARCHAR" />
+    <!--配置QuestionChoice-->
+    <association property="qc"  resultMap="qcMap" javaType="QuestionChoice" column="choice_id"/>
+  </resultMap>
+  <!--配置QuestionChoice-->
+  <resultMap id="qcMap" type="QuestionChoice">
+    <id column="choice_id" property="choiceId" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+  </resultMap>
+<!--根据题目id查询所有题目-->
+  <select id="getQuestionByid" resultMap="BaseResultMap">
+      select qi.question_id,qi.content,qi.url,qi.difficulty,qi.type,
+      qi.solve_id,qi.answer_id,ui.user_id,ui.nick_name,si.school_id,si.`name`,
+      ti.`name`,ti.difficulty,ti.thumb_up,ti.thum_down
+      from question_info qi ,user_info ui,school_info si,test_info ti
+      where qi.up_id=ui.user_id and ui.school_id=si.school_id and
+      qi.from_id=ti.test_id and qi.question_id=#{id}
+  </select>
+
+  <!--根据题目id查询判断题型，为选择题则查询选项-->
+  <select id="queryChoiceByQId" resultMap="BaseResultMap">
+      select qi.question_id,qcc.choice_id ,qc.content,qi.url,qc.`type`
+      from question_info qi ,question_choice qc,question_choice_con qcc
+      where qi.question_id=qcc.question_id and qcc.choice_id=qc.choice_id
+	  and qi.question_id=#{id}
+  </select>
+
+
+</mapper>
