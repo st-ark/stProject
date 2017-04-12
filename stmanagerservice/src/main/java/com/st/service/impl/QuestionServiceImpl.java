@@ -4,7 +4,6 @@ import com.st.common.pojo.StResult;
 import com.st.mapper.QuestionInfoMapper;
 
 import com.st.pojo.*;
-import com.st.pojo.QuestionInfoExample.Criteria;
 import com.st.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
