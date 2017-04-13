@@ -182,6 +182,7 @@
                 <artifactId>solr-solrj</artifactId>
                 <version>${solrj.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

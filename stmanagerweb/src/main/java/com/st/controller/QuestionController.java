@@ -31,7 +31,7 @@ public class QuestionController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value="/question/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="/question/{id}",method = RequestMethod.POST)
     public Map<String,Object> getQuestionById(@PathVariable String id){
         HashMap<String,Object> map=new HashMap<>();
         if(id==null || "".equals("id"))

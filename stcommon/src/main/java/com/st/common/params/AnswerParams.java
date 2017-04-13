@@ -1,15 +1,15 @@
-package com.st.common.pojo;
+package com.st.common.params;
 
 /**
  * Created by Administrator on 2017/4/11.
  */
 public class AnswerParams {
-  private   String userId;
- private   String questionId;
- private String content;
- private String url;
- private Integer type;
- private String answerId;
+    private String userId;
+    private String questionId;
+    private String content;
+    private String url;
+    private Integer type;
+    private String answerId;
 
     public void setType(Integer type) {
         this.type = type;
@@ -58,6 +58,4 @@ public class AnswerParams {
     public Integer getType() {
         return type;
     }
-
-
 }

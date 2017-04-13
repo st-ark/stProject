@@ -30,7 +30,7 @@ public class QuestionSolveConController {
      */
 
     @ResponseBody
-    @RequestMapping(value = "/getSolveByid/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/getSolveByid/{id}",method = RequestMethod.POST)
     public Map<String,Object> getSolveByid (@PathVariable String id)
     {
         HashMap<String,Object> map=new HashMap<>();
