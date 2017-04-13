@@ -1,6 +1,8 @@
 package com.st.pojo;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PackageInfo {
     private String packageId;
@@ -24,6 +26,22 @@ public class PackageInfo {
     private Integer type;
 
     private Integer state;
+
+    private Set PackageQuestionsCon =new HashSet();
+
+    private UserInfo ui;
+
+    public void setUi(UserInfo ui) {this.ui = ui;}
+
+    public UserInfo getUi() {return ui;}
+
+    public void setPackageQuestionsCon(Set packageQuestionsCon) {
+        PackageQuestionsCon = packageQuestionsCon;
+    }
+
+    public Set getPackageQuestionsCon() {
+        return PackageQuestionsCon;
+    }
 
     public String getPackageId() {
         return packageId;

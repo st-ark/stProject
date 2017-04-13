@@ -40,7 +40,7 @@
   <!-- 配置school-->
   <resultMap id="siMap" type="SchoolInfo">
     <id column="school_id" property="schoolId" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sname" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <!--配置QuestionChoiceCon-->
   <resultMap id="qccMap" type="QuestionChoiceCon">
@@ -59,12 +59,12 @@
   </resultMap>
 <!--根据题目id查询所有题目-->
   <select id="getQuestionByid" resultMap="BaseResultMap">
-      select qi.question_id,qi.content,qi.url,qi.difficulty,qi.type,
-      qi.solve_id,qi.answer_id,ui.user_id,ui.nick_name,si.school_id,si.`name`,
+      select qi.question_id,qi.content,qi.url,qi.difficulty,qi.type,qi.up_id,
+      qi.solve_id,qi.answer_id,ui.user_id,ui.nick_name,si.school_id,si.sname,
       ti.`name`,ti.difficulty,ti.thumb_up,ti.thum_down
       from question_info qi ,user_info ui,school_info si,test_info ti
       where qi.up_id=ui.user_id and ui.school_id=si.school_id and
-      qi.from_id=ti.test_id and qi.question_id=#{id}
+      qi.from_id=ti.test_id and qi.question_id=#{id} and qi.state=1
   </select>
 
   <!--根据题目id查询判断题型，为选择题则查询选项-->
@@ -74,6 +74,14 @@
       where qi.question_id=qcc.question_id and qcc.choice_id=qc.choice_id
 	  and qi.question_id=#{id}
   </select>
+  <!--根据题目id查询上传人-->
+  <select id="queryById" resultMap="BaseResultMap">
+    select up_id from question_info where question_id=#{0} and up_id=#{1}
+  </select>
+  <!--删除题目-->
+  <update id="delQuestion">
+    update question_info qi set qi.state=#{1} where qi.question_id=#{0}
+  </update>
 
 
 </mapper>

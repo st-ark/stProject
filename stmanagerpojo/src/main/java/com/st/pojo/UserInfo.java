@@ -41,6 +41,16 @@ public class UserInfo {
 
     private Set QuestionSolve=new HashSet();
 
+    private Set PackageInfo =new HashSet();
+
+    public void setPackageInfo(Set packageInfo) {
+        PackageInfo = packageInfo;
+    }
+
+    public Set getPackageInfo() {
+        return PackageInfo;
+    }
+
     public void setQuestionSolve(Set questionSolve) {
         QuestionSolve = questionSolve;
     }

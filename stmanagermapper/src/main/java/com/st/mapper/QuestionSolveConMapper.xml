@@ -46,12 +46,12 @@
   <!-- 配置school-->
   <resultMap id="siMap" type="SchoolInfo">
     <id column="school_id" property="schoolId" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sname" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <!--配置knowledge_info-->
   <resultMap id="kiMap" type="KnowledgeInfo">
     <id column="knowledge_id" property="knowledgeId" jdbcType="INTEGER" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="kname" property="name" jdbcType="VARCHAR" />
   </resultMap>
   <!--配置knowledge_info-->
   <resultMap id="qeMap" type="QuestionEye">
@@ -77,7 +77,7 @@
   <select id="getSolveByid" resultMap="BaseResultMap">
 
       select qs.solve_id,qs.content,qs.thumb_up,qs.thumb_down,qs.state,qs.up_id,
-		    ui.nick_name,si.name,ki.knowledge_id,ki.name,qe.eye_id,qe.content,qe.`type`,
+		    ui.nick_name,si.sname,ki.knowledge_id,ki.kname,qe.eye_id,qe.content,qe.`type`,
 		    qt.trap_id,qt.content,qt.`type`
 		    from
 		          question_solve qs,question_solve_con qsc,knowledge_info ki,
@@ -85,6 +85,6 @@
 		    where
 				  qs.solve_id=qsc.solve_id and qs.up_id=ui.user_id and ui.school_id=si.school_id and
 				  qsc.knowledge_id=ki.knowledge_id and qsc.eye_id=qe.eye_id and qsc.trap_id=qt.trap_id and
-				  qsc.formula_id=fi.formula_id and qs.solve_id=#{id}
+				  qsc.formula_id=fi.formula_id and qs.solve_id=#{id} and qs.state=1
   </select>
 </mapper>

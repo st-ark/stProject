@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.st.mapper.KnowledgeInfoMapper" >
-  <resultMap id="BaseResultMap" type="com.st.pojo.KnowledgeInfo" >
-    <id column="knowledge_id" property="knowledgeId" jdbcType="INTEGER" />
-    <result column="kname" property="name" jdbcType="VARCHAR" />
-    <result column="unit_id" property="unitId" jdbcType="INTEGER" />
-    <result column="formula_id" property="formulaId" jdbcType="VARCHAR" />
-    <result column="edit_date" property="editDate" jdbcType="TIMESTAMP" />
+<mapper namespace="com.st.mapper.PackageQuestionsConMapper" >
+  <resultMap id="BaseResultMap" type="com.st.pojo.PackageQuestionsCon" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="package_id" property="packageId" jdbcType="VARCHAR" />
+    <result column="question_id" property="questionId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    knowledge_id, name, unit_id, formula_id, edit_date
+    id, package_id, question_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.st.pojo.KnowledgeInfoExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.st.pojo.PackageQuestionsConExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from knowledge_info
+    from package_questions_con
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -86,85 +84,67 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from knowledge_info
-    where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+    from package_questions_con
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from knowledge_info
-    where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+    delete from package_questions_con
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.st.pojo.KnowledgeInfoExample" >
-    delete from knowledge_info
+  <delete id="deleteByExample" parameterType="com.st.pojo.PackageQuestionsConExample" >
+    delete from package_questions_con
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.st.pojo.KnowledgeInfo" >
-    insert into knowledge_info (knowledge_id, name, unit_id, 
-      formula_id, edit_date)
-    values (#{knowledgeId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{unitId,jdbcType=INTEGER}, 
-      #{formulaId,jdbcType=VARCHAR}, #{editDate,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.st.pojo.PackageQuestionsCon" >
+    insert into package_questions_con (id, package_id, question_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{packageId,jdbcType=VARCHAR}, #{questionId,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.st.pojo.KnowledgeInfo" >
-    insert into knowledge_info
+  <insert id="insertSelective" parameterType="com.st.pojo.PackageQuestionsCon" >
+    insert into package_questions_con
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="knowledgeId != null" >
-        knowledge_id,
+      <if test="id != null" >
+        id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="packageId != null" >
+        package_id,
       </if>
-      <if test="unitId != null" >
-        unit_id,
-      </if>
-      <if test="formulaId != null" >
-        formula_id,
-      </if>
-      <if test="editDate != null" >
-        edit_date,
+      <if test="questionId != null" >
+        question_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="knowledgeId != null" >
-        #{knowledgeId,jdbcType=INTEGER},
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="packageId != null" >
+        #{packageId,jdbcType=VARCHAR},
       </if>
-      <if test="unitId != null" >
-        #{unitId,jdbcType=INTEGER},
-      </if>
-      <if test="formulaId != null" >
-        #{formulaId,jdbcType=VARCHAR},
-      </if>
-      <if test="editDate != null" >
-        #{editDate,jdbcType=TIMESTAMP},
+      <if test="questionId != null" >
+        #{questionId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.st.pojo.KnowledgeInfoExample" resultType="java.lang.Integer" >
-    select count(*) from knowledge_info
+  <select id="countByExample" parameterType="com.st.pojo.PackageQuestionsConExample" resultType="java.lang.Integer" >
+    select count(*) from package_questions_con
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update knowledge_info
+    update package_questions_con
     <set >
-      <if test="record.knowledgeId != null" >
-        knowledge_id = #{record.knowledgeId,jdbcType=INTEGER},
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.packageId != null" >
+        package_id = #{record.packageId,jdbcType=VARCHAR},
       </if>
-      <if test="record.unitId != null" >
-        unit_id = #{record.unitId,jdbcType=INTEGER},
-      </if>
-      <if test="record.formulaId != null" >
-        formula_id = #{record.formulaId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.editDate != null" >
-        edit_date = #{record.editDate,jdbcType=TIMESTAMP},
+      <if test="record.questionId != null" >
+        question_id = #{record.questionId,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -172,40 +152,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update knowledge_info
-    set knowledge_id = #{record.knowledgeId,jdbcType=INTEGER},
-      name = #{record.name,jdbcType=VARCHAR},
-      unit_id = #{record.unitId,jdbcType=INTEGER},
-      formula_id = #{record.formulaId,jdbcType=VARCHAR},
-      edit_date = #{record.editDate,jdbcType=TIMESTAMP}
+    update package_questions_con
+    set id = #{record.id,jdbcType=INTEGER},
+      package_id = #{record.packageId,jdbcType=VARCHAR},
+      question_id = #{record.questionId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.st.pojo.KnowledgeInfo" >
-    update knowledge_info
+  <update id="updateByPrimaryKeySelective" parameterType="com.st.pojo.PackageQuestionsCon" >
+    update package_questions_con
     <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="packageId != null" >
+        package_id = #{packageId,jdbcType=VARCHAR},
       </if>
-      <if test="unitId != null" >
-        unit_id = #{unitId,jdbcType=INTEGER},
-      </if>
-      <if test="formulaId != null" >
-        formula_id = #{formulaId,jdbcType=VARCHAR},
-      </if>
-      <if test="editDate != null" >
-        edit_date = #{editDate,jdbcType=TIMESTAMP},
+      <if test="questionId != null" >
+        question_id = #{questionId,jdbcType=VARCHAR},
       </if>
     </set>
-    where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.st.pojo.KnowledgeInfo" >
-    update knowledge_info
-    set name = #{name,jdbcType=VARCHAR},
-      unit_id = #{unitId,jdbcType=INTEGER},
-      formula_id = #{formulaId,jdbcType=VARCHAR},
-      edit_date = #{editDate,jdbcType=TIMESTAMP}
-    where knowledge_id = #{knowledgeId,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.st.pojo.PackageQuestionsCon" >
+    update package_questions_con
+    set package_id = #{packageId,jdbcType=VARCHAR},
+      question_id = #{questionId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

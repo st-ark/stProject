@@ -28,4 +28,11 @@ public interface UserInfoMapper {
     int updateByPrimaryKeySelective(UserInfo record);
 
     int updateByPrimaryKey(UserInfo record);
+
+    /**
+     * 根据用户id判断用户类型
+     * @param uId
+     * @return
+     */
+    UserInfo checkAuhority(String uId);
 }

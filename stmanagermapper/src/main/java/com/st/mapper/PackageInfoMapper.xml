@@ -13,299 +13,59 @@
     <result column="content" property="content" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="state" property="state" jdbcType="INTEGER" />
+    <!--配置UserInfo-->
+    <association property="ui" resultMap="uiMap" javaType="UserInfo" column="up_id"/>
+    <!--配置packageQuestionCon-->
+    <collection property="PackageQuestionsCon" resultMap="pqcMap"/>
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
-    package_id, name, up_id, difficulty, count, edit_date, thumb_up, thump_down, content, 
-    type, state
-  </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.st.pojo.PackageInfoExample" >
+  <!--配置Userinfo-->
+  <resultMap id="uiMap" type="UserInfo">
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <!-- 配置school-->
+    <association property="schoolInfo" resultMap="siMap" javaType="SchoolInfo" column="school_id"/>
+  </resultMap>
+  <!--配置packageQuestionCon-->
+  <resultMap id="pqcMap" type="PackageQuestionsCon">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="package_id" property="packageId" jdbcType="VARCHAR" />
+    <result column="question_id" property="questionId" jdbcType="VARCHAR" />
+    <!-- 配置QuestionInfo-->
+    <association property="qi" resultMap="qiMap" javaType="QuestionInfo" column="question_id"/>
+  </resultMap>
+  <!-- 配置QuestionInfo-->
+  <resultMap id="qiMap" type="QuestionInfo">
+    <id column="question_id" property="questionId" jdbcType="VARCHAR" />
+    <result column="difficulty" property="difficulty" jdbcType="INTEGER" />
+  </resultMap>
+  <!--配置schoolInfo-->
+  <resultMap id="siMap" type="SchoolInfo">
+    <id column="school_id" property="schoolId" jdbcType="VARCHAR" />
+    <result column="sname" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- 根据 id 加载 一套题（1-5星级 10 道） 的-->
+    <select id="getPackageByid" resultMap="BaseResultMap">
+      select
+		     p.package_id,p.name,p.count,p.content,p.thumb_up,p.thump_down,p.`type`,p.up_id,
+	     	 ui.nick_name,si.school_id,si.sname,pic.question_id
+		from
+	          package_info p ,package_questions_con pic,question_info qi,user_info ui,school_info si
+	 	where
+			  p.package_id=pic.package_id and pic.question_id=qi.question_id and p.up_id= ui.user_id
+			  and ui.school_id=si.school_id and p.state=1 and p.package_id=#{id} and qi.difficulty <![CDATA[ <=5 ]]>
+			  limit 0,10
+    </select>
+  <!-- 根据 id 加载 一套题（5-10星级 10 道） 的-->
+  <select id="getPackageByid1" resultMap="BaseResultMap">
     select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from package_info
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
+           p.package_id,p.name,p.count,p.content,p.thumb_up,p.thump_down,p.`type`,p.up_id,
+           ui.nick_name,si.school_id,si.sname,pic.question_id
+    from
+           package_info p ,package_questions_con pic,question_info qi,user_info ui,school_info si
+    where
+           p.package_id=pic.package_id and pic.question_id=qi.question_id and p.up_id= ui.user_id
+           and ui.school_id=si.school_id and p.state=1 and p.package_id=#{id} and qi.difficulty <![CDATA[ >=5 ]]>
+           limit 0,10
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from package_info
-    where package_id = #{packageId,jdbcType=VARCHAR}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
-    delete from package_info
-    where package_id = #{packageId,jdbcType=VARCHAR}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.st.pojo.PackageInfoExample" >
-    delete from package_info
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.st.pojo.PackageInfo" >
-    insert into package_info (package_id, name, up_id, 
-      difficulty, count, edit_date, 
-      thumb_up, thump_down, content, 
-      type, state)
-    values (#{packageId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{upId,jdbcType=VARCHAR}, 
-      #{difficulty,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}, #{editDate,jdbcType=TIMESTAMP}, 
-      #{thumbUp,jdbcType=INTEGER}, #{thumpDown,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{state,jdbcType=INTEGER})
-  </insert>
-  <insert id="insertSelective" parameterType="com.st.pojo.PackageInfo" >
-    insert into package_info
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="packageId != null" >
-        package_id,
-      </if>
-      <if test="name != null" >
-        name,
-      </if>
-      <if test="upId != null" >
-        up_id,
-      </if>
-      <if test="difficulty != null" >
-        difficulty,
-      </if>
-      <if test="count != null" >
-        count,
-      </if>
-      <if test="editDate != null" >
-        edit_date,
-      </if>
-      <if test="thumbUp != null" >
-        thumb_up,
-      </if>
-      <if test="thumpDown != null" >
-        thump_down,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="type != null" >
-        type,
-      </if>
-      <if test="state != null" >
-        state,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="packageId != null" >
-        #{packageId,jdbcType=VARCHAR},
-      </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="upId != null" >
-        #{upId,jdbcType=VARCHAR},
-      </if>
-      <if test="difficulty != null" >
-        #{difficulty,jdbcType=INTEGER},
-      </if>
-      <if test="count != null" >
-        #{count,jdbcType=INTEGER},
-      </if>
-      <if test="editDate != null" >
-        #{editDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="thumbUp != null" >
-        #{thumbUp,jdbcType=INTEGER},
-      </if>
-      <if test="thumpDown != null" >
-        #{thumpDown,jdbcType=INTEGER},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        #{state,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.st.pojo.PackageInfoExample" resultType="java.lang.Integer" >
-    select count(*) from package_info
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update package_info
-    <set >
-      <if test="record.packageId != null" >
-        package_id = #{record.packageId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.name != null" >
-        name = #{record.name,jdbcType=VARCHAR},
-      </if>
-      <if test="record.upId != null" >
-        up_id = #{record.upId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.difficulty != null" >
-        difficulty = #{record.difficulty,jdbcType=INTEGER},
-      </if>
-      <if test="record.count != null" >
-        count = #{record.count,jdbcType=INTEGER},
-      </if>
-      <if test="record.editDate != null" >
-        edit_date = #{record.editDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.thumbUp != null" >
-        thumb_up = #{record.thumbUp,jdbcType=INTEGER},
-      </if>
-      <if test="record.thumpDown != null" >
-        thump_down = #{record.thumpDown,jdbcType=INTEGER},
-      </if>
-      <if test="record.content != null" >
-        content = #{record.content,jdbcType=VARCHAR},
-      </if>
-      <if test="record.type != null" >
-        type = #{record.type,jdbcType=INTEGER},
-      </if>
-      <if test="record.state != null" >
-        state = #{record.state,jdbcType=INTEGER},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update package_info
-    set package_id = #{record.packageId,jdbcType=VARCHAR},
-      name = #{record.name,jdbcType=VARCHAR},
-      up_id = #{record.upId,jdbcType=VARCHAR},
-      difficulty = #{record.difficulty,jdbcType=INTEGER},
-      count = #{record.count,jdbcType=INTEGER},
-      edit_date = #{record.editDate,jdbcType=TIMESTAMP},
-      thumb_up = #{record.thumbUp,jdbcType=INTEGER},
-      thump_down = #{record.thumpDown,jdbcType=INTEGER},
-      content = #{record.content,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=INTEGER},
-      state = #{record.state,jdbcType=INTEGER}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.st.pojo.PackageInfo" >
-    update package_info
-    <set >
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="upId != null" >
-        up_id = #{upId,jdbcType=VARCHAR},
-      </if>
-      <if test="difficulty != null" >
-        difficulty = #{difficulty,jdbcType=INTEGER},
-      </if>
-      <if test="count != null" >
-        count = #{count,jdbcType=INTEGER},
-      </if>
-      <if test="editDate != null" >
-        edit_date = #{editDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="thumbUp != null" >
-        thumb_up = #{thumbUp,jdbcType=INTEGER},
-      </if>
-      <if test="thumpDown != null" >
-        thump_down = #{thumpDown,jdbcType=INTEGER},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null" >
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=INTEGER},
-      </if>
-    </set>
-    where package_id = #{packageId,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.st.pojo.PackageInfo" >
-    update package_info
-    set name = #{name,jdbcType=VARCHAR},
-      up_id = #{upId,jdbcType=VARCHAR},
-      difficulty = #{difficulty,jdbcType=INTEGER},
-      count = #{count,jdbcType=INTEGER},
-      edit_date = #{editDate,jdbcType=TIMESTAMP},
-      thumb_up = #{thumbUp,jdbcType=INTEGER},
-      thump_down = #{thumpDown,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      state = #{state,jdbcType=INTEGER}
-    where package_id = #{packageId,jdbcType=VARCHAR}
-  </update>
-
-
-
-
-
 </mapper>

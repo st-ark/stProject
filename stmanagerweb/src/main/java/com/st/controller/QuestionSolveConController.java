@@ -43,6 +43,7 @@ public class QuestionSolveConController {
         else{
             Map<String,Object> data=questionSolveConService.getSolveByid(id);
             map.put("data",data);
+            map.put("status","请求成功");
             return map;
         }
     }
