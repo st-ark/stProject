@@ -1,13 +1,19 @@
 package com.st.service.impl;
 
 
+import com.st.common.params.ResDataParams;
+import com.st.common.params.ResInfoParams;
 import com.st.common.utils.GetState;
 import com.st.common.pojo.StResult;
+import com.st.common.utils.IDUtils;
 import com.st.mapper.ResCommonMapper;
+import com.st.mapper.UserCommonMapper;
+import com.st.pojo.*;
 import com.st.service.ResService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +26,9 @@ import java.util.Map;
 public class ResServiceImpl implements ResService {
     @Autowired
     private ResCommonMapper resCommonMapper;
+
+    @Autowired
+    private UserCommonMapper userCommonMapper;
 
     /**
      * 查询资料
@@ -54,4 +63,57 @@ public class ResServiceImpl implements ResService {
         List<Map<String, Object>> list = resCommonMapper.selectResData(resId);
         return StResult.ok(list).getData();
     }
+
+    /**
+     * 增加资料
+     */
+    @Override
+    public void addRes(ResInfoParams resInfoParams, ResDataParams[] resDataParams) {
+        //判断权限
+        ResInfo resInfo = judgeId(resInfoParams);
+        resInfo.setResId(IDUtils.createId());
+        resInfo.setEditdate(new Date());
+        resInfo.setKnowledgeId(resInfoParams.getKnowledgeId());
+        resInfo.setTitle(resInfoParams.getTitle());
+        resInfo.setType(resInfoParams.getType());
+        resInfo.setUserId(resInfoParams.getUpId());
+        resInfo.setState(0);
+        resInfo.setThumbDown(0l);
+        resInfo.setThumbUp(0l);
+        resInfoParams.setResId(resInfo.getResId());
+        //增加资料信息
+        resCommonMapper.addResInfo(resInfo);
+        for (int i = 0; i < resDataParams.length; i++) {
+            //关联资料内容表
+            ResData resData = new ResData();
+            resData.setDataId(IDUtils.createId());
+            resData.setContent(resDataParams[i].getContent());
+            resData.setType(resDataParams[i].getType());
+            //关联资料id表
+            ResDataCon resDataCon = new ResDataCon();
+            resDataCon.setResId(resInfo.getResId());
+            resDataCon.setDataId(resData.getDataId());
+            //增加资料内容
+            resCommonMapper.addResData(resData);
+            //id表更新
+            resCommonMapper.addResDataCon(resDataCon);
+        }
+
+    }
+
+    /**
+     * 判断权限
+     */
+    public ResInfo judgeId(ResInfoParams resInfoParams) {
+        if (resInfoParams.getUpId() == null || resInfoParams.getUpId().trim().length() == 0) {
+            throw new RuntimeException("userId不能为空");
+        }
+        UserInfo userInfo = userCommonMapper.selectUserInfoAll(resInfoParams.getUpId());
+        if (userInfo == null) {
+            throw new RuntimeException("用户不存在");
+        }
+        ResInfo resInfo = new ResInfo();
+        return resInfo;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.st.mapper;
 
+import com.st.common.params.AnswerParams;
 import com.st.pojo.QuestionAnswer;
 import com.st.pojo.QuestionInfo;
 
@@ -20,4 +21,5 @@ public interface AnswerCommonMapper {
     void addAnswer(QuestionAnswer answer);
     void updateAnswer(QuestionAnswer answer);
     void deleteAnswer(String answerId);
+    void updateQuestionInfo(AnswerParams answerParams);
 }

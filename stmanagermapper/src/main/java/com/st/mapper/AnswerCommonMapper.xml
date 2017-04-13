@@ -67,14 +67,17 @@ WHERE
     </select>
     <insert id="addAnswer" parameterType="com.st.pojo.QuestionAnswer" >
         insert into question_answer
-         (answer_id, content, url, type, up_id, edit_date)
-        values(#{answerId},#{content},#{url},#{type},#{upId},#{editDate})
-    </insert>
-    <insert id="updateAnswer" parameterType="com.st.pojo.QuestionAnswer" >
+           (answer_id, content, url, type, up_id, edit_date)
+       values(#{answerId},#{content},#{url},#{type},#{upId},#{editDate})
+</insert>
+    <update id="updateAnswer" parameterType="com.st.pojo.QuestionAnswer" >
         update question_answer set content = #{content},url=#{url},type=#{type} where answer_id = #{answerId}
-    </insert>
-    <insert id="deleteAnswer" parameterType="String">
+    </update>
+    <delete id="deleteAnswer" parameterType="String">
         delete from  question_answer where answer_id = #{answerId}
-    </insert>
+    </delete>
+    <update id="updateQuestionInfo" parameterType="com.st.common.params.AnswerParams">
+        UPDATE question_info set answer_id = #{answerId} where question_id = #{questionId}
+    </update>
 
 </mapper>

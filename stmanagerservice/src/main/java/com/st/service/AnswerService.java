@@ -1,12 +1,8 @@
 package com.st.service;
 
-import com.st.common.pojo.AnswerParams;
-import com.st.common.pojo.EUTreeNode;
-import com.st.common.pojo.StResult;
+import com.st.common.params.AnswerParams;
 import com.st.pojo.QuestionAnswer;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
 import java.util.Map;
 
 /**

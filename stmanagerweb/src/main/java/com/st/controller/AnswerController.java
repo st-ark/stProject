@@ -1,13 +1,12 @@
 package com.st.controller;
 
-import com.st.common.pojo.AnswerParams;
+import com.st.common.params.AnswerParams;
 import com.st.common.pojo.StResult;
-import com.st.pojo.QuestionAnswer;
 import com.st.service.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -23,9 +22,9 @@ public class AnswerController {
     /**
      * 查询答案信息
      */
-    @RequestMapping("/find/{questionId}")
+    @RequestMapping(value = "/find",method = RequestMethod.POST)
     @ResponseBody
-    public StResult getAnswerList(@PathVariable String questionId) {
+    public StResult getAnswerList(String questionId) {
         try {
             return StResult.ok(answerService.getAnswerList(questionId));
         } catch (Exception e) {
@@ -36,9 +35,9 @@ public class AnswerController {
     /**
      * 增加答案
      */
-    @RequestMapping("/add/{userId}&{questionId}&{url}&{type}&{content}")
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
     @ResponseBody
-    public StResult addAnswer(@PathVariable String userId, @PathVariable String questionId, @PathVariable String url, @PathVariable Integer type, @PathVariable String content) {
+    public StResult addAnswer(String userId,String questionId,String url,Integer type, String content) {
         AnswerParams params = new AnswerParams();
         params.setUserId(userId);
         params.setQuestionId(questionId);
@@ -46,7 +45,8 @@ public class AnswerController {
         params.setType(type);
         params.setContent(content);
         try {
-            return StResult.ok(answerService.addAnswer(params));
+            answerService.addAnswer(params);
+            return StResult.ok("增加成功");
         } catch (Exception e) {
             return StResult.ok(e);
         }
@@ -55,9 +55,9 @@ public class AnswerController {
     /**
      * 修改答案
      */
-    @RequestMapping("/update/{userId}&{questionId}&{answerId}&{url}&{type}&{content}")
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public StResult addAnswer(@PathVariable String userId, @PathVariable String questionId,@PathVariable String answerId, @PathVariable String url, @PathVariable Integer type, @PathVariable String content) {
+    public StResult addAnswer(String userId, String questionId,String answerId,String url,Integer type,String content) {
         AnswerParams params = new AnswerParams();
         params.setQuestionId(questionId);
         params.setUserId(userId);
@@ -66,7 +66,8 @@ public class AnswerController {
         params.setType(type);
         params.setContent(content);
         try {
-            return StResult.ok(answerService.updateAnswer(params));
+            answerService.updateAnswer(params);
+            return StResult.ok("修改成功");
         } catch (Exception e) {
             return StResult.ok(e);
         }
@@ -74,15 +75,16 @@ public class AnswerController {
     /**
      * 删除答案
      */
-    @RequestMapping("/delete/{userId}&{questionId}&{answerId}")
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    public StResult deleteAnswer(@PathVariable String userId,@PathVariable String questionId,@PathVariable String answerId){
+    public StResult deleteAnswer(String userId,String questionId,String answerId){
         AnswerParams params = new AnswerParams();
         params.setUserId(userId);
         params.setQuestionId(questionId);
         params.setAnswerId(answerId);
         try {
-            return StResult.ok(answerService.deleteAnswer(params,answerId));
+            answerService.deleteAnswer(params,answerId);
+            return StResult.ok("删除成功");
         } catch (Exception e) {
             return StResult.ok(e);
         }

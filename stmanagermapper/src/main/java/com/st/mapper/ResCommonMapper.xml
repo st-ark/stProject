@@ -12,7 +12,7 @@
         select state from res_info where res_id = #{redId};
     </select>
     <select id="selectResUp" resultType="Map" parameterType="String">
-       select ri.user_id, ui.nick_name, si.name
+       select ri.user_id, ui.nick_name, si.sname
 from res_info ri
 left join user_info ui on ri.user_id = ui.user_id
 left join school_info si on si.school_id = ui.school_id
@@ -24,5 +24,27 @@ from res_info ri
 left join res_data rd on rd.data_id in (select rdcon.data_id from res_data_con rdcon where rdcon.res_id = ri.res_id)
 where ri.res_id = #{resId}
     </select>
+    <insert id="addResInfo" parameterType="com.st.pojo.ResInfo" >
+        insert into res_info
+        (res_id, user_id, type, knowledge_id, editDate,title,thumb_up, thumb_down, state)
+        values(#{resId},#{userId},#{type},#{knowledgeId},#{editdate},#{title},#{thumbUp},#{thumbDown},#{state})
+    </insert>
+    <update id="updateResInfo" parameterType="com.st.pojo.ResInfo" >
+        update res_info set title = #{title},type=#{type}  where res_id = #{resId}
+    </update>
+    <delete id="deleteResInfo" parameterType="String">
+        delete from  res_info where res_id = #{resId}
+    </delete>
 
+    <insert id="addResData" parameterType="com.st.pojo.ResData">
+        insert into res_data values(#{dataId},#{content},#{type})
+    </insert>
+
+    <update id="updateResData" parameterType="com.st.pojo.ResData" >
+        update res_data set content = #{content},type=#{type}  where data_id = #{dataId}
+    </update>
+
+    <insert id="addResDataCon" parameterType="com.st.pojo.ResDataCon" >
+        insert into res_data_con values(#{id},#{resId},#{dataId})
+    </insert>
 </mapper>
