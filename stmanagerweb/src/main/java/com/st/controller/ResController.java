@@ -6,7 +6,7 @@ import com.st.common.pojo.StResult;
 import com.st.common.resparam.ResDataList;
 import com.st.common.resparam.ResDataParams;
 import com.st.common.resparam.ResInfoParams;
-import com.st.service.ResService;
+import com.st.service.resource.ResService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

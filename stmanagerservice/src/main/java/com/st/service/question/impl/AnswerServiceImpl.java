@@ -1,6 +1,4 @@
 package com.st.service.question.impl;
-
-
 import com.st.common.answerparam.*;
 import com.st.common.answerparam.*;
 import com.st.common.utils.GetState;

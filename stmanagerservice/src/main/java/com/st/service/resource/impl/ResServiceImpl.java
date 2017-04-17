@@ -10,7 +10,7 @@ import com.st.common.utils.IDUtils;
 import com.st.mapper.ResCommonMapper;
 import com.st.mapper.UserCommonMapper;
 import com.st.pojo.*;
-import com.st.service.ResService;
+import com.st.service.resource.ResService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
