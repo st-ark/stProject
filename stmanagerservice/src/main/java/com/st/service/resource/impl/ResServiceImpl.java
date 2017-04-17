@@ -24,7 +24,7 @@ import java.util.Map;
  * Created by Administrator on 2017/4/10.
  */
 @Service
-public class ResServiceImpl implements ResService {
+public class ResServiceImpl implements  ResService {
     @Autowired
     private ResCommonMapper resCommonMapper;
 

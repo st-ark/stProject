@@ -12,7 +12,6 @@
 </head>
 <body>
 <script src="../js/jquery.js"></script>
-
 <script>
 //    var infoJson = {
 //        content: 'concon',
@@ -63,8 +62,6 @@
             console.log("error");
         }
     })
-
-
 </script>
 </body>
 </html>

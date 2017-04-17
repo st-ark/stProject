@@ -3,7 +3,7 @@ package com.st.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.st.common.answerparam.*;
-import com.st.common.params.answerparam.*;
+import com.st.common.answerparam.*;
 import com.st.common.pojo.StResult;
 import com.st.service.question.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;

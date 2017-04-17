@@ -2,7 +2,7 @@ package com.st.service.question.impl;
 
 
 import com.st.common.answerparam.*;
-import com.st.common.params.answerparam.*;
+import com.st.common.answerparam.*;
 import com.st.common.utils.GetState;
 import com.st.common.pojo.StResult;
 import com.st.common.utils.IDUtils;
