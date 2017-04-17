@@ -1,4 +1,4 @@
-package com.st.service.resource.impl;
+package com.st.service.question.impl;
 
 
 import com.st.common.resparam.ResDataList;
@@ -10,7 +10,7 @@ import com.st.common.utils.IDUtils;
 import com.st.mapper.ResCommonMapper;
 import com.st.mapper.UserCommonMapper;
 import com.st.pojo.*;
-import com.st.service.resource.ResService;
+import com.st.service.question.ResService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

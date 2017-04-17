@@ -1,4 +1,4 @@
-package com.st.service.resource;
+package com.st.service.question;
 
 import com.st.common.resparam.ResDataList;
 import com.st.common.resparam.ResDataParams;

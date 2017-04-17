@@ -1,10 +1,10 @@
-package com.st.service.question.impl;
+package com.st.service.resource;
 
 import com.st.mapper.PackageInfoMapper;
 import com.st.mapper.UserInfoMapper;
 import com.st.pojo.PackageInfo;
 import com.st.pojo.UserInfo;
-import com.st.service.question.PackageService;
+import com.st.service.resource.impl.PackageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
