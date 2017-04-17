@@ -1,13 +1,19 @@
 package com.st.controller;
 
-import com.st.common.params.AnswerParams;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.st.common.answerparam.*;
+import com.st.common.params.answerparam.*;
 import com.st.common.pojo.StResult;
-import com.st.service.AnswerService;
+import com.st.service.question.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 答案controller
@@ -22,7 +28,7 @@ public class AnswerController {
     /**
      * 查询答案信息
      */
-    @RequestMapping(value = "/find",method = RequestMethod.POST)
+    @RequestMapping(value = "/find", method = RequestMethod.POST)
     @ResponseBody
     public StResult getAnswerList(String questionId) {
         try {
@@ -35,17 +41,29 @@ public class AnswerController {
     /**
      * 增加答案
      */
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public StResult addAnswer(String userId,String questionId,String url,Integer type, String content) {
-        AnswerParams params = new AnswerParams();
-        params.setUserId(userId);
-        params.setQuestionId(questionId);
-        params.setUrl(url);
-        params.setType(type);
-        params.setContent(content);
+    public StResult addAnswer(String info, String skill, String res) {
         try {
-            answerService.addAnswer(params);
+            AnswerParams params = JSONObject.parseObject(info, AnswerParams.class);
+            SkillList skillList = new SkillList();
+            List<SkillParams> skillParams = new ArrayList<>();
+            JSONArray skillarray = JSONObject.parseArray(skill);
+            for (Object o : skillarray){
+                SkillParams jsonObject = JSONObject.parseObject(o.toString(),SkillParams.class);
+                skillParams.add(jsonObject);
+            }
+            skillList.setSkillParams(skillParams);
+
+            ResList resList = new ResList();
+            List<ResParams> resParams = new ArrayList<>();
+            JSONArray resarray = JSONObject.parseArray(res);
+            for (Object o : resarray){
+                ResParams jsonObject = JSONObject.parseObject(o.toString(), ResParams.class);
+                resParams.add(jsonObject);
+            }
+            resList.setResParams(resParams);
+            answerService.addAnswer(params, skillList, resList);
             return StResult.ok("增加成功");
         } catch (Exception e) {
             return StResult.ok(e);
@@ -55,35 +73,48 @@ public class AnswerController {
     /**
      * 修改答案
      */
-    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
-    public StResult addAnswer(String userId, String questionId,String answerId,String url,Integer type,String content) {
-        AnswerParams params = new AnswerParams();
-        params.setQuestionId(questionId);
-        params.setUserId(userId);
-        params.setAnswerId(answerId);
-        params.setUrl(url);
-        params.setType(type);
-        params.setContent(content);
+    public StResult updateAnswer(String info, String skill, String res) {
         try {
-            answerService.updateAnswer(params);
+            AnswerParams params = JSONObject.parseObject(info, AnswerParams.class);
+            SkillList skillList = new SkillList();
+            List<SkillParams> skillParams = new ArrayList<>();
+            JSONArray skillarray = JSONObject.parseArray(skill);
+            for (Object o : skillarray){
+                SkillParams jsonObject = JSONObject.parseObject(o.toString(),SkillParams.class);
+                skillParams.add(jsonObject);
+            }
+            skillList.setSkillParams(skillParams);
+
+            ResList resList = new ResList();
+            List<ResParams> resParams = new ArrayList<>();
+            JSONArray resarray = JSONObject.parseArray(res);
+            for (Object o : resarray){
+                ResParams jsonObject = JSONObject.parseObject(o.toString(), ResParams.class);
+                resParams.add(jsonObject);
+            }
+            resList.setResParams(resParams);
+
+            answerService.updateAnswer(params, skillList, resList);
             return StResult.ok("修改成功");
         } catch (Exception e) {
             return StResult.ok(e);
         }
     }
+
     /**
      * 删除答案
      */
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
-    public StResult deleteAnswer(String userId,String questionId,String answerId){
+    public StResult deleteAnswer(String userId, String questionId, String answerId) {
         AnswerParams params = new AnswerParams();
         params.setUserId(userId);
         params.setQuestionId(questionId);
         params.setAnswerId(answerId);
         try {
-            answerService.deleteAnswer(params,answerId);
+            answerService.deleteAnswer(params, answerId);
             return StResult.ok("删除成功");
         } catch (Exception e) {
             return StResult.ok(e);

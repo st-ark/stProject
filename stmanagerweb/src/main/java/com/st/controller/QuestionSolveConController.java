@@ -1,7 +1,7 @@
 package com.st.controller;
 
 import com.st.common.pojo.StResult;
-import com.st.service.QuestionSolveConService;
+import com.st.service.question.QuestionSolveConService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

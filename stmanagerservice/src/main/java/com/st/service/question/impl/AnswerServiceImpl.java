@@ -1,16 +1,15 @@
-package com.st.service.impl;
+package com.st.service.question.impl;
 
 
-import com.st.common.params.AnswerParams;
+import com.st.common.answerparam.*;
+import com.st.common.params.answerparam.*;
 import com.st.common.utils.GetState;
 import com.st.common.pojo.StResult;
 import com.st.common.utils.IDUtils;
 import com.st.mapper.AnswerCommonMapper;
 import com.st.mapper.UserCommonMapper;
-import com.st.pojo.QuestionAnswer;
-import com.st.pojo.QuestionInfo;
-import com.st.pojo.UserInfo;
-import com.st.service.AnswerService;
+import com.st.pojo.*;
+import com.st.service.question.AnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +45,9 @@ public class AnswerServiceImpl implements AnswerService {
         if (GetState.getState(answerCommonMapper.selectQuestionState(questionId)) != "发布") {
             throw new RuntimeException(GetState.getState(answerCommonMapper.selectQuestionState(questionId)));
         }
-        if (GetState.getState(answerCommonMapper.selectAnswerState(questionId)) != "发布") {
-            throw new RuntimeException(GetState.getState(answerCommonMapper.selectAnswerState(questionId)));
-        }
+//        if (GetState.getState(answerCommonMapper.selectAnswerState(questionId)) != "发布") {
+//            throw new RuntimeException(GetState.getState(answerCommonMapper.selectAnswerState(questionId)));
+//        }
 
         map.put("info", getInfo(questionId));
         map.put("skill", getSkill(questionId));
@@ -81,7 +80,7 @@ public class AnswerServiceImpl implements AnswerService {
      * 增加答案
      */
     @Override
-    public QuestionAnswer addAnswer(AnswerParams params) {
+    public QuestionAnswer addAnswer(AnswerParams params, SkillList skillList, ResList resList) {
         QuestionAnswer answer = judgeId(params);
         answer.setAnswerId(IDUtils.createId());
         answer.setContent(params.getContent());
@@ -90,9 +89,24 @@ public class AnswerServiceImpl implements AnswerService {
         answer.setUrl(params.getUrl());
         answer.setUpId(params.getUserId());
         params.setAnswerId(answer.getAnswerId());
-        params.setQuestionId(params.getQuestionId());
         answerCommonMapper.addAnswer(answer);
         answerCommonMapper.updateQuestionInfo(params);
+
+        QuestionSkillCon skillCon = new QuestionSkillCon();
+        List<SkillParams> stringSkill = skillList.getSkillParams();
+        for (SkillParams skillParams : stringSkill) {
+            skillCon.setQuestionId(params.getQuestionId());
+            skillCon.setSkillId(skillParams.getSkillId());
+            answerCommonMapper.addQuestionSkillCon(skillCon);
+        }
+
+        QuestionResCon resCon = new QuestionResCon();
+        List<ResParams> stringRes = resList.getResParams();
+        for (ResParams resParams : stringRes) {
+            resCon.setQuestionId(params.getQuestionId());
+            resCon.setResId(resParams.getResId());
+            answerCommonMapper.addQuestionResCon(resCon);
+        }
         return answer;
     }
 
@@ -100,7 +114,7 @@ public class AnswerServiceImpl implements AnswerService {
      * 修改答案
      */
     @Override
-    public QuestionAnswer updateAnswer(AnswerParams params) {
+    public QuestionAnswer updateAnswer(AnswerParams params,SkillList skillList,ResList resList) {
         QuestionAnswer answer = judgeId(params);
         answer.setContent(params.getContent());
         answer.setEditDate(new Date());
@@ -108,6 +122,15 @@ public class AnswerServiceImpl implements AnswerService {
         answer.setUrl(params.getUrl());
         answer.setAnswerId(params.getAnswerId());
         answerCommonMapper.updateAnswer(answer);
+
+        List<SkillParams> stringSkill = skillList.getSkillParams();
+        for (SkillParams skillParams : stringSkill) {
+            answerCommonMapper.updateQuestionSkillCon(skillParams.getSkillId());
+        }
+        List<ResParams> stringRes = resList.getResParams();
+        for (ResParams resParams : stringRes) {
+            answerCommonMapper.updateQuestionResCon(resParams.getResId());
+        }
         return answer;
     }
 

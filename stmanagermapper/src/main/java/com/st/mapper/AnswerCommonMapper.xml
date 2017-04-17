@@ -48,7 +48,7 @@ WHERE
     <select id="selectQuestionState" parameterType="String" resultType="int">
        select state from question_info where question_id = #{id}
     </select>
-    <select id="selectAnswerState" parameterType="String" resultType="int">
+    <select id="selectAnswerState" parameterType="String">
         SELECT
 	qs.state
 FROM
@@ -69,14 +69,26 @@ WHERE
         insert into question_answer
            (answer_id, content, url, type, up_id, edit_date)
        values(#{answerId},#{content},#{url},#{type},#{upId},#{editDate})
-</insert>
+    </insert>
+    <insert id="addQuestionSkillCon" parameterType="com.st.pojo.QuestionSkillCon">
+        insert into question_skill_con(question_id,skill_id) values(#{questionId},#{skillId})
+    </insert>
+    <insert id="addQuestionResCon" parameterType="com.st.pojo.QuestionResCon">
+         insert into question_res_con(question_id,res_id) values(#{questionId},#{resId})
+    </insert>
     <update id="updateAnswer" parameterType="com.st.pojo.QuestionAnswer" >
         update question_answer set content = #{content},url=#{url},type=#{type} where answer_id = #{answerId}
+    </update>
+    <update id="updateQuestionSkillCon" parameterType="String">
+        UPDATE question_skill_con set skill_id = #{skillId}
+    </update>
+    <update id="updateQuestionResCon" parameterType="String">
+        UPDATE question_res_con set res_id = #{resId}
     </update>
     <delete id="deleteAnswer" parameterType="String">
         delete from  question_answer where answer_id = #{answerId}
     </delete>
-    <update id="updateQuestionInfo" parameterType="com.st.common.params.AnswerParams">
+    <update id="updateQuestionInfo" parameterType="com.st.common.answerparam.AnswerParams">
         UPDATE question_info set answer_id = #{answerId} where question_id = #{questionId}
     </update>
 

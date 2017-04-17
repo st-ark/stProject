@@ -1,7 +1,6 @@
 package com.st.controller;
 
-import com.st.pojo.QuestionInfo;
-import com.st.service.QuestionService;
+import com.st.service.question.QuestionService;
 import com.st.common.pojo.StResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**

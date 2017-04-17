@@ -1,4 +1,4 @@
-package com.st.common.params;
+package com.st.common.resparam;
 
 /**
  * Created by Administrator on 2017/4/13.

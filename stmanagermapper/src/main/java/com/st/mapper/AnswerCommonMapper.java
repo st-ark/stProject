@@ -1,8 +1,10 @@
 package com.st.mapper;
 
-import com.st.common.params.AnswerParams;
+import com.st.common.answerparam.AnswerParams;
 import com.st.pojo.QuestionAnswer;
 import com.st.pojo.QuestionInfo;
+import com.st.pojo.QuestionResCon;
+import com.st.pojo.QuestionSkillCon;
 
 import java.util.List;
 import java.util.Map;
@@ -19,7 +21,11 @@ public interface AnswerCommonMapper {
     int selectAnswerState(String questionId);
     QuestionInfo selectQuestionInfoAll(String questionId);
     void addAnswer(QuestionAnswer answer);
+    void addQuestionSkillCon(QuestionSkillCon skillCon);
+    void addQuestionResCon(QuestionResCon resCon);
     void updateAnswer(QuestionAnswer answer);
+    void updateQuestionSkillCon(String skillId);
+    void updateQuestionResCon(String resId);
     void deleteAnswer(String answerId);
     void updateQuestionInfo(AnswerParams answerParams);
 }

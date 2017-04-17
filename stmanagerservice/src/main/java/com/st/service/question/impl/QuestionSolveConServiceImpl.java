@@ -1,9 +1,9 @@
-package com.st.service.impl;
+package com.st.service.question.impl;
 
 import com.st.common.pojo.StResult;
 import com.st.mapper.QuestionSolveConMapper;
 import com.st.pojo.QuestionSolveCon;
-import com.st.service.QuestionSolveConService;
+import com.st.service.question.QuestionSolveConService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

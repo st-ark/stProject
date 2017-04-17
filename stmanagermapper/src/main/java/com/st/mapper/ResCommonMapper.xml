@@ -30,12 +30,11 @@ where ri.res_id = #{resId}
         values(#{resId},#{userId},#{type},#{knowledgeId},#{editdate},#{title},#{thumbUp},#{thumbDown},#{state})
     </insert>
     <update id="updateResInfo" parameterType="com.st.pojo.ResInfo" >
-        update res_info set title = #{title},type=#{type}  where res_id = #{resId}
+        update res_info set title = #{title},type=#{type},  where res_id = #{resId}
     </update>
     <delete id="deleteResInfo" parameterType="String">
         delete from  res_info where res_id = #{resId}
     </delete>
-
     <insert id="addResData" parameterType="com.st.pojo.ResData">
         insert into res_data values(#{dataId},#{content},#{type})
     </insert>
@@ -43,6 +42,7 @@ where ri.res_id = #{resId}
     <update id="updateResData" parameterType="com.st.pojo.ResData" >
         update res_data set content = #{content},type=#{type}  where data_id = #{dataId}
     </update>
+
 
     <insert id="addResDataCon" parameterType="com.st.pojo.ResDataCon" >
         insert into res_data_con values(#{id},#{resId},#{dataId})

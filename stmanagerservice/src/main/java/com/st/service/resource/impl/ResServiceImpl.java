@@ -1,8 +1,9 @@
-package com.st.service.impl;
+package com.st.service.resource.impl;
 
 
-import com.st.common.params.ResDataParams;
-import com.st.common.params.ResInfoParams;
+import com.st.common.resparam.ResDataList;
+import com.st.common.resparam.ResDataParams;
+import com.st.common.resparam.ResInfoParams;
 import com.st.common.utils.GetState;
 import com.st.common.pojo.StResult;
 import com.st.common.utils.IDUtils;
@@ -45,7 +46,6 @@ public class ResServiceImpl implements ResService {
         map.put("info", getInfo(resId));
         map.put("up", getUp(resId));
         map.put("data", getData(resId));
-
         return map;
     }
 
@@ -67,8 +67,8 @@ public class ResServiceImpl implements ResService {
     /**
      * 增加资料
      */
-    @Override
-    public void addRes(ResInfoParams resInfoParams, ResDataParams[] resDataParams) {
+     @Override
+    public void addRes(ResInfoParams resInfoParams, ResDataList list) {
         //判断权限
         ResInfo resInfo = judgeId(resInfoParams);
         resInfo.setResId(IDUtils.createId());
@@ -83,14 +83,15 @@ public class ResServiceImpl implements ResService {
         resInfoParams.setResId(resInfo.getResId());
         //增加资料信息
         resCommonMapper.addResInfo(resInfo);
-        for (int i = 0; i < resDataParams.length; i++) {
-            //关联资料内容表
-            ResData resData = new ResData();
+         //关联资料内容表
+        ResData resData = new ResData();
+         //关联资料id表
+         ResDataCon resDataCon = new ResDataCon();
+         List<ResDataParams> dataParams = list.getData();
+        for (ResDataParams params : dataParams ) {
             resData.setDataId(IDUtils.createId());
-            resData.setContent(resDataParams[i].getContent());
-            resData.setType(resDataParams[i].getType());
-            //关联资料id表
-            ResDataCon resDataCon = new ResDataCon();
+            resData.setContent(params.getContent());
+            resData.setType(params.getType());
             resDataCon.setResId(resInfo.getResId());
             resDataCon.setDataId(resData.getDataId());
             //增加资料内容
@@ -98,7 +99,34 @@ public class ResServiceImpl implements ResService {
             //id表更新
             resCommonMapper.addResDataCon(resDataCon);
         }
+    }
 
+    /**
+     * 修改资料
+     */
+    @Override
+    public void updateRes(ResInfoParams resInfoParams, ResDataList dataList) {
+        ResInfo resInfo = judgeId(resInfoParams);
+        resInfo.setTitle(resInfoParams.getTitle());
+        resInfo.setType(resInfoParams.getType());
+        resInfo.setKnowledgeId(resInfoParams.getKnowledgeId());
+        resInfoParams.setResId(resInfo.getResId());
+        resCommonMapper.updateResInfo(resInfo);
+        //关联资料内容表
+        ResData resData = new ResData();
+        //关联资料id表
+        ResDataCon resDataCon = new ResDataCon();
+        List<ResDataParams> dataParams = dataList.getData();
+        for (ResDataParams params : dataParams ) {
+            resData.setContent(params.getContent());
+            resData.setType(params.getType());
+            resDataCon.setResId(resInfo.getResId());
+            resDataCon.setDataId(resData.getDataId());
+            //增加资料内容
+            resCommonMapper.updateResData(resData);
+            //id表更新
+            resCommonMapper.addResDataCon(resDataCon);
+        }
     }
 
     /**
