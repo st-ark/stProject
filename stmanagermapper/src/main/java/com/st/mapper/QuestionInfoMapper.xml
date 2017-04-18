@@ -84,4 +84,34 @@
   </update>
 
 
+  <!--添加题目-->
+  <insert id="addQuestion" parameterType="com.st.common.params.QuestionParams">
+    insert into question_info
+    <trim prefix="(" suffix=")">
+      <if test="questionId!=null">question_id</if>
+      <if test="content!=null">,content</if>
+      <if test="url!=null">,url</if>
+      <if test="type!=null">,type</if>
+      <if test="upId!=null">,up_id</if>
+      <if test="fromId!=null">,from_id</if>
+      <!-- <if test="QuestionChoiceList !=null and QuestionChoiceList.size() >0">
+          and choice_id in
+         <foreach item="item" index="index"  collection="QuestionChoiceList" open="(" close=")">
+           #{item}
+         </foreach>
+       </if>-->
+    </trim>
+    values
+    <trim prefix="(" suffix=")">
+      <if test="questionId!=null">#{questionId}</if>
+      <if test="content!=null">,#{content}</if>
+      <if test="url!=null">,#{url}</if>
+      <if test="type!=null">,#{type}</if>
+      <if test="upId!=null">,#{upId}</if>
+      <if test="fromId!=null">,#{fromId}</if>
+    </trim>
+  </insert>
+
+
+
 </mapper>

@@ -1,9 +1,7 @@
 package com.st.mapper;
 
+import com.st.common.params.QuestionParams;
 import com.st.pojo.QuestionInfo;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 public interface QuestionInfoMapper {
 
@@ -24,13 +22,19 @@ public interface QuestionInfoMapper {
      * @param qId 题目id
      * @return 收影响行数
      */
-    int delQuestion(String qId,int state);
+    int delQuestion(String qId, int state);
 
     /**
      * 根据题目id查询上传人
      * @param qId
      * @return
      */
-    QuestionInfo queryById(String qId,String up_id);
+    QuestionInfo queryById(String qId, String up_id);
 
+    /**
+     * 添加题目
+     * @param params
+     * @return
+     */
+    int addQuestion(QuestionParams params);
 }
