@@ -40,20 +40,20 @@
 //    })
 
     var infoJson = {
-        resId : "res1",
-        title: "title1",
-        type: 0,
-        knowledgeId : 3,
-        upId: "user1"
+        name:"etetre",
+        content: "ewrdsds",
+        difficulty: 0,
+        type : 3,
+        upId: "user1",
+        count:10
     };
-    var dataArr = [{content:"cincin1",type:0},{content:"cioncin2",type:0}];
+    var dataArr = [{questionId:"questi"},{questionId:"questi"}];
     $.ajax({
-        url: "http://localhost:8080" + "/resource/add",
+        url: "http://localhost:8080" + "/package/delete",
         type: "post",
         dataType: "json",
         data: {
-            "info": JSON.stringify(infoJson),
-            "data": JSON.stringify(dataArr)
+            "packageId":"ce745fa1-899d-4dab-a280-78fdd583da66"
         },
         success: function (result) {
             console.log(result);
@@ -62,6 +62,8 @@
             console.log("error");
         }
     })
+
+
 </script>
 </body>
 </html>
