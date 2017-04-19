@@ -1,31 +1,14 @@
 package com.st.mapper;
 
-import com.st.pojo.QuestionChoice;
-import com.st.pojo.QuestionChoiceExample;
-import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.st.common.params.QuestionChoice;
 
 public interface QuestionChoiceMapper {
-    int countByExample(QuestionChoiceExample example);
 
-    int deleteByExample(QuestionChoiceExample example);
-
-    int deleteByPrimaryKey(String choiceId);
-
-    int insert(QuestionChoice record);
-
-    int insertSelective(QuestionChoice record);
-
-    List<QuestionChoice> selectByExample(QuestionChoiceExample example);
-
-    QuestionChoice selectByPrimaryKey(String choiceId);
-
-    int updateByExampleSelective(@Param("record") QuestionChoice record, @Param("example") QuestionChoiceExample example);
-
-    int updateByExample(@Param("record") QuestionChoice record, @Param("example") QuestionChoiceExample example);
-
-    int updateByPrimaryKeySelective(QuestionChoice record);
-
-    int updateByPrimaryKey(QuestionChoice record);
+    /**
+     * 添加选项
+     * @param qc
+     * @return
+     */
+    int addChoice(QuestionChoice qc);
 }

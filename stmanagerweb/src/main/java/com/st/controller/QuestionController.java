@@ -1,7 +1,11 @@
 package com.st.controller;
 
-import com.st.service.question.QuestionService;
+import com.alibaba.fastjson.JSON;
+import com.st.common.params.QuestionChoice;
+import com.st.common.params.QuestionParams;
 import com.st.common.pojo.StResult;
+import com.st.service.question.QuestionService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,6 +24,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/qi")
 public class QuestionController {
+
+    private static Logger logger = Logger.getLogger(QuestionController.class);
+
     @Autowired
     private QuestionService questionService;
 
@@ -70,7 +78,42 @@ public class QuestionController {
             }
 
     }
+    /**
+     *
+     * @param params
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="/addQuestion",method = RequestMethod.POST)
+    public StResult addQuestion (String params, String choice) {
+        logger.info(params);
+        try {
+            if (params == null || "".equals(params)) {
+                return StResult.ok("传入参数有误");
+            }
+            if (params != null && !"".equals(params))
+            {
+                QuestionParams qp = JSON.parseObject(params, QuestionParams.class);
+                List<QuestionChoice> qclist = JSON.parseArray(choice, QuestionChoice.class);
+                int count = questionService.addQuestion(qp, qclist);
+                if (count > 0)
+                {
+                    return StResult.ok("添加成功");
 
+                }
+            }
+            return StResult.ok("添加失败");
+        } catch (Exception e) {
 
+            return StResult.ok(e);
+        }
+    }
 
-}
+    @ResponseBody
+   @RequestMapping(value = "",method = RequestMethod.POST)
+    public StResult updateQuestion (String params)
+   {
+       return null;
+   }
+
+} 

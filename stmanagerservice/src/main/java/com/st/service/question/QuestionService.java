@@ -1,7 +1,8 @@
 package com.st.service.question;
 
-import com.st.pojo.QuestionInfo;
+import com.st.common.params.QuestionParams;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,7 +23,15 @@ public interface QuestionService {
      * @param uId 用户id
      * @return int 受影响行数
      */
-    int delQuestion(String qId,String uId);
+    int delQuestion(String qId, String uId);
 
 
+    /**
+     * 添加题目添加选项
+     * @param qp List
+     * @return
+     */
+    int addQuestion(QuestionParams qp, List list);
 }
+
+
