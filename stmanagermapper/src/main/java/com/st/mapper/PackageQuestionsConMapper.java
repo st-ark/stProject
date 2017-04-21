@@ -28,6 +28,4 @@ public interface PackageQuestionsConMapper {
     int updateByPrimaryKeySelective(PackageQuestionsCon record);
 
     int updateByPrimaryKey(PackageQuestionsCon record);
-
-
 }
