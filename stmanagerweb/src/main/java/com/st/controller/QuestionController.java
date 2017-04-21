@@ -109,10 +109,33 @@ public class QuestionController {
         }
     }
 
+    /**
+     * 编辑题目
+     * @param params
+     * @return
+     */
     @ResponseBody
-   @RequestMapping(value = "",method = RequestMethod.POST)
-    public StResult updateQuestion (String params)
+    @RequestMapping(value = "/updateQuestion",method = RequestMethod.POST)
+    public StResult updateQuestion (String params,String choice)
    {
+
+       if(params==null || "".equals(params))
+       {
+           StResult.ok("传入参数有误");
+       }
+       if(params!=null || !"".equals(params))
+       {
+           QuestionParams qp=JSON.parseObject(params,QuestionParams.class);
+           List<QuestionChoice> list=JSON.parseArray(choice,QuestionChoice.class);
+           int count=questionService.updateQuestion(qp,list);
+           if(count>0)
+           {
+               StResult.ok("修改成功");
+           }
+       }
+
+
+
        return null;
    }
 

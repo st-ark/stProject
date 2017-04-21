@@ -94,12 +94,6 @@
       <if test="type!=null">,type</if>
       <if test="upId!=null">,up_id</if>
       <if test="fromId!=null">,from_id</if>
-      <!-- <if test="QuestionChoiceList !=null and QuestionChoiceList.size() >0">
-          and choice_id in
-         <foreach item="item" index="index"  collection="QuestionChoiceList" open="(" close=")">
-           #{item}
-         </foreach>
-       </if>-->
     </trim>
     values
     <trim prefix="(" suffix=")">
@@ -111,6 +105,16 @@
       <if test="fromId!=null">,#{fromId}</if>
     </trim>
   </insert>
+  <!-- 查询修改题目用户有没有修改权限-->
+  <select id="queryByUserId" resultType="int" parameterType="com.st.common.params.QuestionParams">
+      select 1 from question_info where up_id=#{0} and question_id=#{1}
+  </select>
+  <!-- 修改题目-->
+  <update id="updateQuestion" parameterType="com.st.common.params.QuestionParams">
+    update question_info set content=#{content},url=#{url},type=#{type},from_id=#{fromId}
+    where question_id=#{questionId}
+  </update>
+
 
 
 

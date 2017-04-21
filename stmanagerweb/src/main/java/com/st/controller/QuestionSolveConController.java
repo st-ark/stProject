@@ -1,7 +1,11 @@
 package com.st.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.st.common.params.QuestionSolve;
+import com.st.common.params.QuestionSolveCon;
 import com.st.common.pojo.StResult;
 import com.st.service.question.QuestionSolveConService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,6 +23,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/qsc")
 public class QuestionSolveConController {
+
+    private static Logger logger = Logger.getLogger(QuestionSolveCon.class);
 
     @Autowired
     private QuestionSolveConService questionSolveConService;
@@ -46,6 +53,34 @@ public class QuestionSolveConController {
             map.put("status","请求成功");
             return map;
         }
+    }
+
+    /**
+     * 添加解题思路
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addSolve",method = RequestMethod.POST)
+    public StResult addSolve(String solve,String solveCon)
+    {
+        logger.info(solve);
+        if(solve==null || "".equals(solve))
+        {
+           return StResult.ok("输入参数有误");
+        }
+        if(solve !=null && !"".equals(solve))
+        {
+            QuestionSolve qs= JSON.parseObject(solve, QuestionSolve.class);
+            List<QuestionSolveCon> list= JSON.parseArray(solveCon, QuestionSolveCon.class);
+            int count=questionSolveConService.addQuestionSolve(qs,list);
+            if(count>0)
+            {
+               return  StResult.ok("添加成功");
+            }
+        }
+
+        return StResult.ok("添加失败");
+
     }
 
 }

@@ -3,6 +3,8 @@ package com.st.mapper;
 
 import com.st.common.params.QuestionChoice;
 
+import java.util.List;
+
 public interface QuestionChoiceMapper {
 
     /**
@@ -11,4 +13,11 @@ public interface QuestionChoiceMapper {
      * @return
      */
     int addChoice(QuestionChoice qc);
+
+    /**
+     * 修改选项
+     * @param qc
+     * @return
+     */
+    int updateQuestionChoice(QuestionChoice qc);
 }

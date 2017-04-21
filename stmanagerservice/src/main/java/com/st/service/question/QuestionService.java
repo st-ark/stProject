@@ -32,6 +32,13 @@ public interface QuestionService {
      * @return
      */
     int addQuestion(QuestionParams qp, List list);
+
+    /**
+     * 修改题目
+     * @param params list
+     * @return
+     */
+    int updateQuestion(QuestionParams params,List list);
 }
 
 

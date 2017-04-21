@@ -1,7 +1,10 @@
 package com.st.mapper;
 
+import com.st.common.params.QuestionChoice;
 import com.st.common.params.QuestionParams;
 import com.st.pojo.QuestionInfo;
+
+import java.util.List;
 
 public interface QuestionInfoMapper {
 
@@ -37,4 +40,20 @@ public interface QuestionInfoMapper {
      * @return
      */
     int addQuestion(QuestionParams params);
+
+    /**
+     * 修改题目
+     * @param params
+     * @return
+     */
+    int updateQuestion(QuestionParams params);
+
+    /**
+     * 查询修改题目用户有没有权限
+     * @param userId
+     * @return
+     */
+    int queryByUserId(String userId,String questionId);
+
+
 }

@@ -129,37 +129,85 @@ public class QuestionServiceImpl implements QuestionService {
             qp.setContent(params.getContent());
             qp.setFromId(params.getFromId());
             qp.setType(params.getType());
-            //添加题目
-            int count = questionInfoMapper.addQuestion(qp);
-            if (count > 0) {
-                if (list != null && list.size() > 0)//判断是否有选项
-                {
-                    List<QuestionChoice> qclist = list;
-                    for (QuestionChoice qc : qclist)
-                    {
-                        QuestionChoice c = new QuestionChoice();
-                        c.setChoiceId(IDUtils.createId());
-                        c.setContent(qc.getContent());
-                        c.setType(qc.getType());
-                        c.setUrl(qc.getUrl());
-                        //添加选项
-                        int count1 = questionChoiceMapper.addChoice(c);
-                        if (count1 > 0)
-                        {
-                            //添加关联表
-                            int count2 = questionChoiceConMapper.addquestionChoiceCon(qp.getQuestionId(),c.getChoiceId());
-                            if (count2 > 0)
-                            {
-                                return count2;
-                            }
-                            return count1;
-                        }
-                    }
-                    return count;
-                }
-            }
-            return 0;
+            //判断是否为考霸
+            UserInfo ui= userInfoMapper.checkAuhority(qp.getUpId());
+             if(ui.getType()!=1)
+             {
+                 StResult.ok("您不是考霸，没有该操作权限");
+             }else{
+                 //添加题目
+                 int count = questionInfoMapper.addQuestion(qp);
+                 if (count > 0) {
+                     if (list != null && list.size() > 0)//判断是否有选项
+                     {
+                         List<QuestionChoice> qclist = list;
+                         for (QuestionChoice qc : qclist)
+                         {
+                             QuestionChoice c = new QuestionChoice();
+                             c.setChoiceId(IDUtils.createId());
+                             c.setContent(qc.getContent());
+                             c.setType(qc.getType());
+                             c.setUrl(qc.getUrl());
+                             //添加选项
+                             int count1 = questionChoiceMapper.addChoice(c);
+                             if (count1 > 0)
+                             {
+                                 //添加关联表
+                                 int count2 = questionChoiceConMapper.addquestionChoiceCon(qp.getQuestionId(),c.getChoiceId());
+                                 if (count2 > 0)
+                                 {
+                                     StResult.ok("添加成功");
+                                 }
+                                 StResult.ok("添加成功");
+                             }
+                         }
+                         return count;
+                     }
+                 }
+                 return 0;
+             }
         }
+        return 0;
+    }
+
+    @Override
+    public int updateQuestion(QuestionParams params,List list) {
+
+        System.out.print(params.getUpId()+"====================="+params.getQuestionId());
+        //判断该用户有没有修改权限
+        int count=questionInfoMapper.queryByUserId(params.getUpId(),params.getQuestionId());
+        if(count<=0)
+        {
+            StResult.ok("你没有修改权限");
+        }
+        else{
+           int count1= questionInfoMapper.updateQuestion(params);
+           if(count1>0)
+           {
+               if(list!=null && list.size()>0)//判断是否有选项
+               {
+                   List<QuestionChoice> qclist=list;
+                     //修改选项
+                   for(QuestionChoice qc:qclist)
+                   {
+                       QuestionChoice c = new QuestionChoice();
+                       c.setChoiceId(IDUtils.createId());
+                       c.setContent(qc.getContent());
+                       c.setType(qc.getType());
+                       c.setUrl(qc.getUrl());
+                       int count2=questionChoiceMapper.updateQuestionChoice(qc);
+                       if(count2>0)
+                       {
+                           StResult.ok("修改成功");
+                       }
+
+                   }
+               }
+               StResult.ok("修改成功");
+               return count1;
+           }
+        }
+
         return 0;
     }
 }

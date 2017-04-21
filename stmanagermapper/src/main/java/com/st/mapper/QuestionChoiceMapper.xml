@@ -25,4 +25,8 @@
           <if test="type!=null">,#{type}</if>
       </trim>
   </insert>
+  <!-- 修改选项-->
+  <update id="updateQuestionChoice" parameterType="com.st.common.params.QuestionChoice">
+    update question_choice set content=#{content},url=#{url},type=#{type} where choice_id=#{choiceId}
+  </update>
 </mapper>

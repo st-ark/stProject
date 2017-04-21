@@ -87,4 +87,33 @@
 				  qsc.knowledge_id=ki.knowledge_id and qsc.eye_id=qe.eye_id and qsc.trap_id=qt.trap_id and
 				  qsc.formula_id=fi.formula_id and qs.solve_id=#{id} and qs.state=1
   </select>
+  <!--添加错法-->
+    <insert id="addQuestionSolveCon" parameterType="com.st.common.params.QuestionSolveCon">
+      insert into question_solve_con
+      <trim prefix="(" suffix=")">
+        <if test="solveId!=null">solve_id</if>
+        <if test="questionId!=null">,question_id</if>
+        <if test="knowledgeId!=null">,knowledge_id</if>
+        <if test="knowledgeCheck!=null">,knowledge_check</if>
+        <if test="eyeId!=null">,eye_id</if>
+        <if test="eyeCheck!=null">,eye_check</if>
+        <if test="trapId!=null">,trap_id</if>
+        <if test="trapCheck!=null">,trap_check</if>
+        <if test="formulaId!=null">,formula_id</if>
+        <if test="formulaCheck!=null">,formula_check</if>
+      </trim>
+      values
+      <trim prefix="(" suffix=")">
+        <if test="solveId!=null">#{solveId}</if>
+        <if test="questionId!=null">,#{questionId}</if>
+        <if test="knowledgeId!=null">,#{knowledgeId}</if>
+        <if test="knowledgeCheck!=null">,#{knowledgeCheck}</if>
+        <if test="eyeId!=null">,#{eyeId}</if>
+        <if test="eyeCheck!=null">,#{eyeCheck}</if>
+        <if test="trapId!=null">,#{trapId}</if>
+        <if test="trapCheck!=null">,#{trapCheck}</if>
+        <if test="formulaId!=null">,#{formulaId}</if>
+        <if test="formulaCheck!=null">,#{formulaCheck}</if>
+      </trim>
+    </insert>
 </mapper>
