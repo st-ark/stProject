@@ -15,7 +15,8 @@
 
             function one()
             {
-              /*  var question=
+              /*添加 题目
+               var question=
                  {
                      content: "content1",
                      url:"http:update.wwww",
@@ -44,35 +45,39 @@
                             type:3
                         }];*/
 
+              /* 修改思路*/
               var info={
                   upId:"user1",
-                  content:"testContent1",
-                  questionId:"testQuestionId1"
+                  solveId:"solve1",
+                  content:"updateContent1",
+                  questionId:"timu1"
               };
              var array=[{
-                  knowledgeId:1,
-                  knowledgeCheck:1,
-                  eyeId:"eyeId1",
-                  eyeCheck:1,
-                  trapId:"trapId1",
-                  trapCheck:1,
-                  formulaId:"formulaTestId1",
-                  formulaCheck:1
+                  knowledgeId:11,
+                  knowledgeCheck:12,
+                  eyeIdOld:"eye2",
+                  eyeId:"eye2",
+                  eyeCheck:13,
+                  trapId:"sdfdfdfsdfsdfId4",
+                  trapCheck:11,
+                  formulaId:"djhjghjh",
+                  formulaCheck:15
               },
                   {
-                      knowledgeId:2,
-                      knowledgeCheck:2,
-                      eyeId:"eyeId2",
-                      eyeCheck:2,
-                      trapId:"trapId2",
-                      trapCheck:2,
-                      formulaId:"formulaTestId2",
-                      formulaCheck:2
+                      knowledgeId:3,
+                      knowledgeCheck:23,
+                      eyeIdOld:"eye3",
+                      eyeId:"test23333333",
+                      eyeCheck:23,
+                      trapId:"hjghjhhgjgh",
+                      trapCheck:32,
+                      formulaId:"ghjghjgh",
+                      formulaCheck:23
                   }
               ];
                  $.ajax({
                 type:"POST",
-                url:"qsc/addSolve",
+                url:"qsc/updateSolve",
                 dataType: "json",
                 data:{
                        "solve":JSON.stringify(info),

@@ -61,7 +61,7 @@
   <select id="getQuestionByid" resultMap="BaseResultMap">
       select qi.question_id,qi.content,qi.url,qi.difficulty,qi.type,qi.up_id,
       qi.solve_id,qi.answer_id,ui.user_id,ui.nick_name,si.school_id,si.sname,
-      ti.`name`,ti.difficulty,ti.thumb_up,ti.thum_down
+      ti.`name`,ti.difficulty,ti.thumb_up,ti.thumb_down
       from question_info qi ,user_info ui,school_info si,test_info ti
       where qi.up_id=ui.user_id and ui.school_id=si.school_id and
       qi.from_id=ti.test_id and qi.question_id=#{id} and qi.state=1

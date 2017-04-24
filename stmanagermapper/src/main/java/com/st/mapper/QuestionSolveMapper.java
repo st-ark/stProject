@@ -1,6 +1,6 @@
 package com.st.mapper;
 
-import com.st.pojo.QuestionSolve;
+import com.st.common.params.QuestionSolve;
 import com.st.pojo.QuestionSolveExample;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,5 +12,20 @@ public interface QuestionSolveMapper {
      * @param qs
      * @return
      */
-    int addQuestionSolve(com.st.common.params.QuestionSolve qs);
+    int addQuestionSolve(QuestionSolve qs);
+
+    /**
+     * 判断该用户是否是上传人
+     * @param upId
+     * @param solveId
+     * @return
+     */
+    int queryBySolveId(String upId,String solveId);
+
+    /**
+     * 修改思路
+     * @param qs
+     * @return
+     */
+    int updateSolve(QuestionSolve qs);
 }

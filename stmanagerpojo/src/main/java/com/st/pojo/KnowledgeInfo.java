@@ -15,11 +15,20 @@ public class KnowledgeInfo {
 
     private Date editDate;
 
-    private Set QuestionSolveCon=new HashSet();
+    private QuestionSolveCon qsc;
 
-    public void setQuestionSolveCon(Set questionSolveCon) {QuestionSolveCon = questionSolveCon;}
+    public void setQsc(QuestionSolveCon qsc) {
+        this.qsc = qsc;
+    }
 
-    public Set getQuestionSolveCon() {return QuestionSolveCon;}
+    public QuestionSolveCon getQsc() {
+        return qsc;
+    }
+    // private Set QuestionSolveCon=new HashSet();
+
+   // public void setQuestionSolveCon(Set questionSolveCon) {QuestionSolveCon = questionSolveCon;}
+
+    //public Set getQuestionSolveCon() {return QuestionSolveCon;}
 
     public Integer getKnowledgeId() {
         return knowledgeId;

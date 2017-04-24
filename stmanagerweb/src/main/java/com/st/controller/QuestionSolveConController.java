@@ -37,7 +37,7 @@ public class QuestionSolveConController {
      */
 
     @ResponseBody
-    @RequestMapping(value = "/getSolveByid/{id}",method = RequestMethod.POST)
+    @RequestMapping(value = "/getSolveByid/{id}",method = RequestMethod.GET)
     public Map<String,Object> getSolveByid (@PathVariable String id)
     {
         HashMap<String,Object> map=new HashMap<>();
@@ -81,6 +81,55 @@ public class QuestionSolveConController {
 
         return StResult.ok("添加失败");
 
+    }
+
+    /**
+     * 修改思路
+     * @param solve
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value="updateSolve",method = RequestMethod.POST)
+    public StResult updateSolve(String solve,String solveCon)
+    {
+        if(solve==null || "".equals(solve))
+        {
+            StResult.ok("输入参数有误");
+        }
+        else{
+            QuestionSolve qs=JSON.parseObject(solve,QuestionSolve.class);
+             List<QuestionSolveCon>list=JSON.parseArray(solveCon,QuestionSolveCon.class);
+             int count= questionSolveConService.updateQuestionSolve(qs,list);
+            if(count>0)
+            {
+                return StResult.ok("修改成功");
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 删除解题思路
+     * @param solveId upId
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/delSolve" ,method = RequestMethod.GET)
+    public StResult delSolver(String solveId,String upId)
+    {
+        if(solveId==null || "".equals("solveId"))
+        {
+            StResult.ok("solveId能不能为空");
+        }
+        else{
+           int count= questionSolveConService.delQuestionSolve(solveId,upId);
+           if(count>0)
+           {
+               return StResult.ok("删除成功");
+           }
+
+        }
+        return null;
     }
 
 }

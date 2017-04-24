@@ -30,4 +30,13 @@
     </trim>
   </insert>
 
+  <!--判断该用户是否有操作权限-->
+  <select id="queryBySolveId" resultType="int">
+    select 1 from question_solve where up_id=#{0} and solve_id=#{1}
+  </select>
+
+  <update id="updateSolve" parameterType="com.st.common.params.QuestionSolve">
+    update question_solve set content=#{content} where solve_id=#{solveId} and question_id=#{questionId}
+  </update>
+
 </mapper>

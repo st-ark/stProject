@@ -10,11 +10,12 @@ public class QuestionEye {
 
     private Integer type;
 
-    private Set QuestionSolveCon=new HashSet();
+    //private Set QuestionSolveCon=new HashSet();
 
-    public void setQuestionSolveCon(Set questionSolveCon) {QuestionSolveCon = questionSolveCon;}
+    //public void setQuestionSolveCon(Set questionSolveCon) {QuestionSolveCon = questionSolveCon;}
 
-    public Set getQuestionSolveCon() {return QuestionSolveCon;}
+    //public Set getQuestionSolveCon() {return QuestionSolveCon;}
+
 
     public String getEyeId() {
         return eyeId;

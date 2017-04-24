@@ -28,15 +28,52 @@ public class QuestionSolveCon {
 
     private Set QuestionSolve =new HashSet();
 
-    private KnowledgeInfo ki;
+  //  private KnowledgeInfo ki;
 
-    private QuestionEye qe;
+   // private QuestionEye qe;
 
-    private QuestionTrap qt;
+   // private QuestionTrap qt;
 
-    private FormulaInfo fi;
+   // private FormulaInfo fi;
 
-    public void setKi(KnowledgeInfo ki) {
+    private Set KnowledgeInfo =new HashSet();
+    private Set QuestionEye =new HashSet();
+    private Set QuestionTrap =new HashSet();
+    private Set FormulaInfo =new HashSet();
+
+    public void setQuestionEye(Set questionEye) {
+        QuestionEye = questionEye;
+    }
+
+    public void setQuestionTrap(Set questionTrap) {
+        QuestionTrap = questionTrap;
+    }
+
+    public void setFormulaInfo(Set formulaInfo) {
+        FormulaInfo = formulaInfo;
+    }
+
+    public void setKnowledgeInfo(Set knowledgeInfo) {
+        KnowledgeInfo = knowledgeInfo;
+    }
+
+    public Set getKnowledgeInfo() {
+        return KnowledgeInfo;
+    }
+
+    public Set getQuestionEye() {
+        return QuestionEye;
+    }
+
+    public Set getQuestionTrap() {
+        return QuestionTrap;
+    }
+
+    public Set getFormulaInfo() {
+        return FormulaInfo;
+    }
+
+    /** public void setKi(KnowledgeInfo ki) {
         this.ki = ki;
     }
 
@@ -66,7 +103,7 @@ public class QuestionSolveCon {
 
     public FormulaInfo getFi() {
         return fi;
-    }
+    }**/
 
     public void setQuestionSolve(Set questionSolve) {
         QuestionSolve = questionSolve;

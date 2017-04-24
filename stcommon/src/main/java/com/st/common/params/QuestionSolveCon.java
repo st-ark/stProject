@@ -9,11 +9,20 @@ public class QuestionSolveCon {
     private int knowledgeId;
     private int knowledgeCheck;
     private String eyeId;
+    private String eyeIdOld;
     private int eyeCheck;
     private String trapId;
     private int trapCheck;
     private String formulaId;
     private int formulaCheck;
+
+    public void setEyeIdOld(String eyeIdOld) {
+        this.eyeIdOld = eyeIdOld;
+    }
+
+    public String getEyeIdOld() {
+        return eyeIdOld;
+    }
 
     public void setSolveId(String solveId) {
         this.solveId = solveId;

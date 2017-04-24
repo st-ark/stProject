@@ -27,5 +27,19 @@ public interface QuestionSolveConService {
      */
    int addQuestionSolve(QuestionSolve qs, List<QuestionSolveCon> list);
 
+    /**
+     * 修改思路
+     * @param qs
+     * @param list
+     * @return
+     */
+   int updateQuestionSolve(QuestionSolve qs,List<QuestionSolveCon>list);
+
+    /**
+     * 跟胡思路id删除思路
+     * @param solveId
+     * @return
+     */
+   int delQuestionSolve(String solveId,String upId);
 
 }

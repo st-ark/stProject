@@ -14,16 +14,28 @@
     <result column="formula_check" property="formulaCheck" jdbcType="INTEGER" />
     <result column="trap_check" property="trapCheck" jdbcType="INTEGER" />
     <!--配置knowledge_info-->
-    <association property="ki" resultMap="kiMap" javaType="KnowledgeInfo" column="knowledge_id" />
+    <!--<association property="ki" resultMap="kiMap" javaType="KnowledgeInfo" column="knowledge_id" />-->
     <!--配置QuestionEye-->
-    <association property="qe" resultMap="qeMap" javaType="QuestionEye" column="eye_id" />
+   <!-- <association property="qe" resultMap="qeMap" javaType="QuestionEye" column="eye_id" />-->
+
     <!--配置QuestionTrap-->
-    <association property="qt" resultMap="qtMap" javaType="QuestionTrap" column="trap_id" />
+    <!--<association property="qt" resultMap="qtMap" javaType="QuestionTrap" column="trap_id" />-->
     <!--配置FormulInfo-->
-    <association property="fi" resultMap="fiMap" javaType="FormulaInfo" column="formula_id" />
+    <!--<association property="fi" resultMap="fiMap" javaType="FormulaInfo" column="formula_id" />-->
+    <!--配置QuestionTrap-->
+
+    <collection property="QuestionTrap" resultMap="qtMap"/>
+    <!--配置FormulInfo-->
+    <collection property="FormulaInfo" resultMap="fiMap"/>
+    <!--配置QuestionEye-->
+    <collection property="QuestionEye" resultMap="qeMap"/>
     <!-- 配置QuestionSolve-->
     <collection property="QuestionSolve" resultMap="qsMap"/>
+    <!--配置knowledge_info-->
+    <collection property="KnowledgeInfo" resultMap="kiMap"/>
   </resultMap>
+
+
     <!-- 配置QuestionSolve-->
   <resultMap id="qsMap" type="QuestionSolve">
     <id column="solve_id" property="solveId" jdbcType="VARCHAR" />
@@ -36,13 +48,14 @@
     <!-- 配置UserInfo-->
       <association property="userInfo" column="question_solve" resultMap="uiMap" javaType="UserInfo"/>
   </resultMap>
+
   <!--配置Userinfo-->
   <resultMap id="uiMap" type="UserInfo">
-    <id column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
-    <!-- 配置school-->
-    <association property="schoolInfo" resultMap="siMap" javaType="SchoolInfo" column="school_id"/>
-  </resultMap>
+  <id column="user_id" property="userId" jdbcType="VARCHAR" />
+  <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+  <!-- 配置school-->
+  <association property="schoolInfo" resultMap="siMap" javaType="SchoolInfo" column="school_id"/>
+</resultMap>
   <!-- 配置school-->
   <resultMap id="siMap" type="SchoolInfo">
     <id column="school_id" property="schoolId" jdbcType="VARCHAR" />
@@ -116,4 +129,22 @@
         <if test="formulaCheck!=null">,#{formulaCheck}</if>
       </trim>
     </insert>
+  <update id="updateQuestionSolveCon" parameterType="com.st.common.params.QuestionSolveCon">
+    update question_solve_con set knowledge_id=#{knowledgeId},knowledge_check=#{knowledgeCheck},
+            eye_id=#{eyeId},eye_check=#{eyeCheck},trap_id=#{trapId},trap_check=#{trapCheck},
+            formula_id=#{formulaId},formula_check=#{formulaCheck} where eye_id=#{eyeIdOld}
+  </update>
+  <!--删除原来的eyeID-->
+  <delete id="delEyeById">
+    delete from question_eye where eye_Id=#{eyeIdOld}
+  </delete>
+  <!--判断用户是哦福有删除权限-->
+  <select id="queryUserById" resultType="int">
+  select 1 from question_solve where up_id=#{0} and solve_id=#{1}
+  </select>
+
+  <!--根据solveId删除解题思路-->
+  <delete id="delQoestionSolveById">
+    delete from question_solve_con where solve_id=#{solveId}
+  </delete>
 </mapper>
